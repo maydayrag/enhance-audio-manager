@@ -18,7 +18,7 @@ addon_info = {
 	"addon_sourceURL": "https://github.com/maydayrag/enhance-audio-manager",
 	"addon_docFileName": "readme.html",
 	"addon_minimumNVDAVersion": "2026.1.1",
-	"addon_lastTestedNVDAVersion": "2026.1.1",
+	"addon_lastTestedNVDAVersion": "2026.2",
 	"addon_updateChannel": None,
 	"addon_license": "GPL-2.0-or-later",
 	"addon_licenseURL": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
