@@ -30,8 +30,8 @@ In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to th
 | Next audio application | Base+Numpad 9 | Base+Right Arrow |
 | Increase selected target's volume | Base+Numpad 8 | Base+Up Arrow |
 | Decrease selected target's volume | Base+Numpad 2 | Base+Down Arrow |
-| Increase microphone boost | Ctrl+Alt+Numpad 8 | Ctrl+Alt+Numpad 8 |
-| Decrease microphone boost | Ctrl+Alt+Numpad 2 | Ctrl+Alt+Numpad 2 |
+| Increase microphone boost | Ctrl+Windows+Numpad 8 | Ctrl+Windows+Up Arrow |
+| Decrease microphone boost | Ctrl+Windows+Numpad 2 | Ctrl+Windows+Down Arrow |
 | Toggle selected target's mute | Base+Numpad 5 | Base+Space |
 | Set selected device as Windows default | Base+Numpad Enter | Base+Enter |
 | Next NVDA output device | Base+Numpad Plus | Base+Backslash |
@@ -50,4 +50,4 @@ Press the reset shortcut twice quickly to set all audio application volumes to 1
 
 ## Microphone boost
 
-The microphone boost shortcuts use the numeric keypad and work in both keyboard layouts without selecting a device first. Each press changes the default microphone's boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.
+The microphone boost shortcuts use the numeric keypad in NVDA's desktop layout and the arrow keys in NVDA's laptop layout. No device selection is needed first. Each press changes the default microphone's boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.

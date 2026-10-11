@@ -58,8 +58,10 @@ def verify_behavior():
                     for gesture in ast.literal_eval(keyword.value):
                         assert gesture not in bindings
                         bindings[gesture] = node.name
-    assert bindings["kb:control+alt+numpad2"] == "script_defaultMicrophoneBoostDown"
-    assert bindings["kb:control+alt+numpad8"] == "script_defaultMicrophoneBoostUp"
+    assert bindings["kb(desktop):control+windows+numpad2"] == "script_defaultMicrophoneBoostDown"
+    assert bindings["kb(desktop):control+windows+numpad8"] == "script_defaultMicrophoneBoostUp"
+    assert bindings["kb(laptop):control+windows+downarrow"] == "script_defaultMicrophoneBoostDown"
+    assert bindings["kb(laptop):control+windows+uparrow"] == "script_defaultMicrophoneBoostUp"
 
 
 if __name__ == "__main__":

@@ -849,7 +849,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@scriptHandler.script(
 		category=CATEGORY,
 		description=_("Decrease default microphone boost (dB)"),
-		gestures=["kb:control+alt+numpad2"],
+		gestures=["kb(desktop):control+windows+numpad2", "kb(laptop):control+windows+downarrow"],
 	)
 	def script_defaultMicrophoneBoostDown(self, gesture):
 		self._run(
@@ -860,7 +860,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@scriptHandler.script(
 		category=CATEGORY,
 		description=_("Increase default microphone boost (dB)"),
-		gestures=["kb:control+alt+numpad8"],
+		gestures=["kb(desktop):control+windows+numpad8", "kb(laptop):control+windows+uparrow"],
 	)
 	def script_defaultMicrophoneBoostUp(self, gesture):
 		self._run(
