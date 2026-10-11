@@ -48,7 +48,7 @@ Press the reset shortcut twice quickly to set all audio application volumes to 1
 
 ## Microphone boost
 
-- **Ctrl+Shift+Numpad 2:** decrease the default microphone's boost.
-- **Ctrl+Shift+Numpad 8:** increase the default microphone's boost.
+- **Ctrl+Alt+2:** decrease the default microphone's boost.
+- **Ctrl+Alt+8:** increase the default microphone's boost.
 
 These shortcuts work in both keyboard layouts without selecting a device first. Each press changes boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.
