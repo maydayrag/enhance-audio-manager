@@ -1,6 +1,6 @@
 # Enhance Audio Manager
 
-Author: 圓臉
+Author: roundface
 
 ## Introduction
 
