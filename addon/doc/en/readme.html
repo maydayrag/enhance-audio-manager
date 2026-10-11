@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Enhance Audio Manager</title></head>
+<body>
+<h1>Enhance Audio Manager</h1>
+<p>Enhance Audio Manager 1.0 is an NVDA add-on for controlling Windows audio from the keyboard. Manage playback and recording devices, application volume, microphone boost, and NVDA's output device with speech and braille feedback.</p>
+<p>Requires NVDA 2026.1.1 or later. English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.</p>
+<h2>Getting started</h2>
+<p>Open <code>enhanceAudioManager-1.0.nvda-addon</code> with NVDA running, follow the installation prompts, and restart NVDA when prompted.</p>
+<p>Use the shortcuts below to select a playback device, recording device, or audio application. Then adjust its volume, toggle mute, or change its device as needed. Volume changes use 1% steps. Device and application lists do not wrap; a short beep indicates the beginning or end of a list. Unavailable devices and empty lists are announced.</p>
+<p>When NVDA starts, the add-on unmutes active playback devices that are muted.</p>
+<p>To customize shortcuts, open NVDA's <strong>Preferences &gt; Input gestures</strong> and find the <strong>Enhance Audio Manager</strong> category. Laptop shortcuts use NVDA's laptop keyboard layout.</p>
+<h2>Keyboard shortcuts</h2>
+<p>In the table below, <strong>Base</strong> means <strong>Ctrl+Windows+Alt</strong>. Numpad keys refer to the numeric keypad.</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Desktop shortcut</th>
+<th>Laptop shortcut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Previous playback device</td>
+<td>Base+Numpad 4</td>
+<td>Base+Page Up</td>
+</tr>
+<tr>
+<td>Next playback device</td>
+<td>Base+Numpad 6</td>
+<td>Base+Page Down</td>
+</tr>
+<tr>
+<td>Previous recording device</td>
+<td>Base+Numpad 1</td>
+<td>Base+Home</td>
+</tr>
+<tr>
+<td>Next recording device</td>
+<td>Base+Numpad 3</td>
+<td>Base+End</td>
+</tr>
+<tr>
+<td>Previous audio application</td>
+<td>Base+Numpad 7</td>
+<td>Base+Left Arrow</td>
+</tr>
+<tr>
+<td>Next audio application</td>
+<td>Base+Numpad 9</td>
+<td>Base+Right Arrow</td>
+</tr>
+<tr>
+<td>Increase selected target's volume</td>
+<td>Base+Numpad 8</td>
+<td>Base+Up Arrow</td>
+</tr>
+<tr>
+<td>Decrease selected target's volume</td>
+<td>Base+Numpad 2</td>
+<td>Base+Down Arrow</td>
+</tr>
+<tr>
+<td>Toggle selected target's mute</td>
+<td>Base+Numpad 5</td>
+<td>Base+Space</td>
+</tr>
+<tr>
+<td>Set selected device as Windows default</td>
+<td>Base+Numpad Enter</td>
+<td>Base+Enter</td>
+</tr>
+<tr>
+<td>Next NVDA output device</td>
+<td>Base+Numpad Plus</td>
+<td>Base+Backslash</td>
+</tr>
+<tr>
+<td>Previous NVDA output device</td>
+<td>Shift+Base+Numpad Plus</td>
+<td>Shift+Base+Backslash</td>
+</tr>
+<tr>
+<td>Lock or unlock default microphone volume</td>
+<td>Base+Numpad Delete</td>
+<td>Base+Delete</td>
+</tr>
+<tr>
+<td>Next playback device for selected application</td>
+<td>Base+Numpad Multiply</td>
+<td>Base+Right Bracket</td>
+</tr>
+<tr>
+<td>Previous playback device for selected application</td>
+<td>Shift+Base+Numpad Multiply</td>
+<td>Shift+Base+Right Bracket</td>
+</tr>
+<tr>
+<td>Next recording device for selected application</td>
+<td>Base+Numpad Divide</td>
+<td>Base+Left Bracket</td>
+</tr>
+<tr>
+<td>Previous recording device for selected application</td>
+<td>Shift+Base+Numpad Divide</td>
+<td>Shift+Base+Left Bracket</td>
+</tr>
+<tr>
+<td>Reset devices for all audio applications</td>
+<td>Base+Numpad Minus</td>
+<td>Base+Backspace</td>
+</tr>
+<tr>
+<td>Toggle default microphone mute</td>
+<td>Shift+Base+Numpad 2</td>
+<td>Shift+Base+Down Arrow</td>
+</tr>
+<tr>
+<td>Toggle default playback device mute</td>
+<td>Shift+Base+Numpad 5</td>
+<td>Shift+Base+Up Arrow</td>
+</tr>
+<tr>
+<td>Toggle foreground application's mute</td>
+<td>Shift+Base+Numpad 8</td>
+<td>Shift+Base+Space</td>
+</tr>
+</tbody>
+</table>
+<p>Press the reset shortcut twice quickly to set all audio application volumes to 100% and unmute them.</p>
+<h2>Microphone boost</h2>
+<ul>
+<li><strong>Ctrl+Shift+Numpad 2:</strong> decrease the default microphone's boost.</li>
+<li><strong>Ctrl+Shift+Numpad 8:</strong> increase the default microphone's boost.</li>
+</ul>
+<p>These shortcuts work in both keyboard layouts without selecting a device first. Each press changes boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.</p>
+</body>
+</html>

@@ -6,9 +6,9 @@ import unittest
 from unittest.mock import patch
 
 PLUGINS = Path(__file__).resolve().parents[1] / "addon/globalPlugins"
-sys.path.insert(0, str(PLUGINS / "vendor"))
+sys.path.insert(0, str(PLUGINS / "enhanceAudioManager/vendor"))
 sys.path.insert(0, str(PLUGINS))
-from _audioManager import microphoneBoost as boost
+from _enhanceAudioManager import microphoneBoost as boost
 from comtypes import COMObject
 
 

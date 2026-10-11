@@ -16,7 +16,7 @@ from typing import Any
 from concurrent.futures import Future, ThreadPoolExecutor
 
 # 第三方相依套件跟隨附加元件封裝，避免依賴 NVDA 內部剛好附帶的套件。
-_vendorPath = str(Path(__file__).parent.parent / "vendor")
+_vendorPath = str(Path(__file__).with_name("vendor"))
 if _vendorPath not in sys.path:
 	sys.path.insert(0, _vendorPath)
 
@@ -37,7 +37,7 @@ from pycaw.utils import AudioUtilities
 
 addonHandler.initTranslation()
 
-CATEGORY = _("Enhance Audio Manager 音訊管理器")
+CATEGORY = _("Enhance Audio Manager")
 _ENDPOINT_NOT_FOUND = -2147023728  # HRESULT_FROM_WIN32(ERROR_NOT_FOUND)
 
 
@@ -408,16 +408,16 @@ class TargetNavigator:
 
 	def missingCurrentMessage(self) -> str:
 		"""依刷新後是否仍有其他項目，說明空清單或單一項目移除。"""
-		return self._emptyMessage if not self._targets else _("所選音訊裝置已移除")
+		return self._emptyMessage if not self._targets else _("The selected audio device has been removed")
 
 	def describe(self) -> str:
 		target = self.current
 		if target is None:
-			return self._emptyMessage if not self._targets else _("請先選擇音訊目標")
+			return self._emptyMessage if not self._targets else _("Select an audio target first")
 		# 先報讀重要狀態，再報讀目標名稱，讓使用者立即知道是否靜音。
-		state = _("靜音，") if target.muted else ""
-		defaultState = _("預設裝置，") if target.isDefault else ""
-		return _("{defaultState}{state}{name}，音量 {volume}").format(
+		state = _("Muted, ") if target.muted else ""
+		defaultState = _("Default device, ") if target.isDefault else ""
+		return _("{defaultState}{state}{name}, volume {volume}").format(
 			name=target.name,
 			volume=target.volume,
 			state=state,
@@ -427,7 +427,7 @@ class TargetNavigator:
 	def changeVolume(self, amount: int) -> str:
 		target = self.current
 		if target is None:
-			return self._emptyMessage if not self._targets else _("請先選擇音訊目標")
+			return self._emptyMessage if not self._targets else _("Select an audio target first")
 		# 音量鍵可能被快速連按。正常路徑直接使用瀏覽清單時取得的介面，
 		# 避免每 1% 都完整列舉裝置，讓新數值能立刻送到語音與點字顯示。
 		# 若介面確實已失效，下方的例外路徑仍會重新列舉並重試一次。
@@ -471,15 +471,15 @@ class TargetNavigator:
 	def toggleMute(self) -> str:
 		target = self.current
 		if target is None:
-			return self._emptyMessage if not self._targets else _("請先選擇音訊目標")
+			return self._emptyMessage if not self._targets else _("Select an audio target first")
 		# 靜音切換和音量調整採相同的熱插拔驗證，絕不操作失效介面。
 		target = self.refreshCurrent()
 		if target is None:
 			return self.missingCurrentMessage()
 		muted = target.toggleMute()
-		return _("{state}，{name}").format(
+		return _("{state}, {name}").format(
 			name=target.name,
-			state=_("靜音") if muted else _("取消靜音"),
+			state=_("Muted") if muted else _("Unmuted"),
 		)
 
 
@@ -488,32 +488,32 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def __init__(self):
 		super().__init__()
-		config.conf.spec["audioManager"] = {
+		config.conf.spec["enhanceAudioManager"] = {
 			"lockMicrophoneVolume": "boolean(default=False)",
 			"microphoneVolume": "integer(default=50, min=0, max=100)",
 		}
 		self._backend = CoreAudioBackend()
 		self._playback = TargetNavigator(
 			lambda: self._backend.listDevices(DeviceKind.PLAYBACK),
-			_("播放裝置"),
-			_("沒有任何輸出裝置"),
+			_("Playback devices"),
+			_("No output devices"),
 		)
 		self._recording = TargetNavigator(
 			lambda: self._backend.listDevices(DeviceKind.RECORDING),
-			_("錄音裝置"),
-			_("沒有任何輸入裝置"),
+			_("Recording devices"),
+			_("No input devices"),
 		)
 		self._sessions = TargetNavigator(
 			self._backend.listSessions,
-			_("音訊應用程式"),
-			_("沒有任何音訊應用程式"),
+			_("Audio applications"),
+			_("No audio applications"),
 		)
 		self._activeNavigator: TargetNavigator | None = None
 		self._sessionDeviceIndexes: dict[tuple[int, DeviceKind], int] = {}
-		self._microphoneVolumeLocked = config.conf["audioManager"]["lockMicrophoneVolume"]
-		self._lockedMicrophoneVolume = config.conf["audioManager"]["microphoneVolume"]
+		self._microphoneVolumeLocked = config.conf["enhanceAudioManager"]["lockMicrophoneVolume"]
+		self._lockedMicrophoneVolume = config.conf["enhanceAudioManager"]["microphoneVolume"]
 		self._lastLockErrorTime = 0.0
-		self._microphoneExecutor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="AudioManagerMic")
+		self._microphoneExecutor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="EnhanceAudioManagerMic")
 		self._microphoneFuture: Future | None = None
 		# 與參考專案相同，每 100 毫秒檢查一次預設麥克風音量。
 		self._microphoneTimer = wx.Timer()
@@ -575,7 +575,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			ui.message(operation())
 		except Exception:
 			log.exception(errorMessage)
-			ui.message(_("音訊操作失敗，詳細資訊已寫入 NVDA 記錄"))
+			ui.message(_("Audio operation failed; details have been written to the NVDA log"))
 
 	def _select(self, navigator: TargetNavigator, offset: int) -> None:
 		self._activeNavigator = navigator
@@ -583,7 +583,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def _volume(self, direction: int) -> str:
 		if self._activeNavigator is None:
-			return _("請先選擇播放裝置、錄音裝置或音訊應用程式")
+			return _("Select a playback device, recording device, or audio application first")
 		# 一次固定調整 1%，不受舊設定檔中可能殘留的數值影響。
 		message = self._activeNavigator.changeVolume(direction)
 		# 鎖定期間若調整的是預設麥克風，就以新音量更新鎖定值。
@@ -594,7 +594,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				# 列舉預設裝置，以免延後這次數值的顯示。
 				if target is not None and target.isDefault and message.isdecimal():
 					self._lockedMicrophoneVolume = int(message)
-					config.conf["audioManager"]["microphoneVolume"] = self._lockedMicrophoneVolume
+					config.conf["enhanceAudioManager"]["microphoneVolume"] = self._lockedMicrophoneVolume
 			except Exception:
 				# The volume operation already succeeded. Failure of this follow-up query
 				# must not produce a misleading operation-failed announcement.
@@ -603,7 +603,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("下一個播放裝置"),
+		description=_("Next playback device"),
 		gestures=["kb:control+windows+alt+numpad6", "kb(laptop):control+windows+alt+pagedown"],
 	)
 	def script_nextPlayback(self, gesture):
@@ -611,7 +611,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("上一個播放裝置"),
+		description=_("Previous playback device"),
 		gestures=["kb:control+windows+alt+numpad4", "kb(laptop):control+windows+alt+pageup"],
 	)
 	def script_previousPlayback(self, gesture):
@@ -619,7 +619,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("下一個錄音裝置"),
+		description=_("Next recording device"),
 		gestures=["kb:control+windows+alt+numpad3", "kb(laptop):control+windows+alt+end"],
 	)
 	def script_nextRecording(self, gesture):
@@ -627,7 +627,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("上一個錄音裝置"),
+		description=_("Previous recording device"),
 		gestures=["kb:control+windows+alt+numpad1", "kb(laptop):control+windows+alt+home"],
 	)
 	def script_previousRecording(self, gesture):
@@ -635,7 +635,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("下一個音訊應用程式"),
+		description=_("Next audio application"),
 		gestures=["kb:control+windows+alt+numpad9", "kb(laptop):control+windows+alt+rightarrow"],
 	)
 	def script_nextSession(self, gesture):
@@ -643,7 +643,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("上一個音訊應用程式"),
+		description=_("Previous audio application"),
 		gestures=["kb:control+windows+alt+numpad7", "kb(laptop):control+windows+alt+leftarrow"],
 	)
 	def script_previousSession(self, gesture):
@@ -651,7 +651,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("提高目前音訊目標的音量"),
+		description=_("Increase the selected audio target volume"),
 		gestures=["kb:control+windows+alt+numpad8", "kb(laptop):control+windows+alt+uparrow"],
 	)
 	def script_volumeUp(self, gesture):
@@ -659,7 +659,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("降低目前音訊目標的音量"),
+		description=_("Decrease the selected audio target volume"),
 		gestures=["kb:control+windows+alt+numpad2", "kb(laptop):control+windows+alt+downarrow"],
 	)
 	def script_volumeDown(self, gesture):
@@ -667,25 +667,25 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("切換目前音訊目標的靜音狀態"),
+		description=_("Toggle mute for the selected audio target"),
 		gestures=["kb:control+windows+alt+numpad5", "kb(laptop):control+windows+alt+space"],
 	)
 	def script_toggleMute(self, gesture):
 		def toggle() -> str:
 			if self._activeNavigator is None:
-				return _("請先選擇播放裝置、錄音裝置或音訊應用程式")
+				return _("Select a playback device, recording device, or audio application first")
 			return self._activeNavigator.toggleMute()
 		self._run(toggle, "Unable to toggle audio mute")
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("將目前裝置設為 Windows 預設裝置"),
+		description=_("Set the selected device as the Windows default"),
 		gestures=["kb:control+windows+alt+numpadenter", "kb(laptop):control+windows+alt+enter"],
 	)
 	def script_setDefault(self, gesture):
 		def setDefault() -> str:
 			if self._activeNavigator not in (self._playback, self._recording):
-				return _("請先選擇播放裝置或錄音裝置")
+				return _("Select a playback or recording device first")
 			target = self._activeNavigator.current
 			if target is None:
 				return self._activeNavigator.emptyMessage
@@ -694,12 +694,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				return self._activeNavigator.missingCurrentMessage()
 			self._backend.setDefaultDevice(target)
 			self._activeNavigator.markDefault(target.identifier)
-			return _("已設為 Windows 預設裝置，{name}").format(name=target.name)
+			return _("Set as Windows default device, {name}").format(name=target.name)
 		self._run(setDefault, "Unable to set the default audio device")
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("下一個 NVDA 輸出裝置"),
+		description=_("Next NVDA output device"),
 		gestures=["kb:control+windows+alt+numpadplus", "kb(laptop):control+windows+alt+backslash"],
 	)
 	def script_nextNVDAOutput(self, gesture):
@@ -707,7 +707,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("上一個 NVDA 輸出裝置"),
+		description=_("Previous NVDA output device"),
 		gestures=[
 			"kb:shift+control+windows+alt+numpadplus",
 			"kb(laptop):shift+control+windows+alt+backslash",
@@ -718,7 +718,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("鎖定或解除鎖定麥克風音量"),
+		description=_("Lock or unlock microphone volume"),
 		gestures=[
 			"kb:control+windows+alt+numpaddelete",
 			"kb(laptop):control+windows+alt+delete",
@@ -731,32 +731,32 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		"""記住目前預設麥克風音量，或解除既有鎖定。"""
 		target = self._backend.getDefaultDevice(DeviceKind.RECORDING)
 		if target is None:
-			return _("沒有任何輸入裝置")
+			return _("No input devices")
 		self._microphoneVolumeLocked = not self._microphoneVolumeLocked
 		if self._microphoneVolumeLocked:
 			self._lockedMicrophoneVolume = target.volume
-			config.conf["audioManager"]["microphoneVolume"] = self._lockedMicrophoneVolume
-			message = _("已鎖定，{name}，音量 {volume}").format(
+			config.conf["enhanceAudioManager"]["microphoneVolume"] = self._lockedMicrophoneVolume
+			message = _("Locked, {name}, volume {volume}").format(
 				name=target.name,
 				volume=self._lockedMicrophoneVolume,
 			)
 		else:
-			message = _("已解除鎖定，{name}").format(name=target.name)
-		config.conf["audioManager"]["lockMicrophoneVolume"] = self._microphoneVolumeLocked
+			message = _("Unlocked, {name}").format(name=target.name)
+		config.conf["enhanceAudioManager"]["lockMicrophoneVolume"] = self._microphoneVolumeLocked
 		return message
 
 	def _changeSessionDevice(self, kind: DeviceKind, offset: int) -> str:
 		"""切換目前選取之應用程式的播放或錄音裝置。"""
 		if self._activeNavigator is not self._sessions or self._sessions.current is None:
-			return _("請先選擇音訊應用程式")
+			return _("Select an audio application first")
 		session = self._sessions.current
 		if session.processId is None:
-			return _("無法取得所選應用程式的處理程序")
+			return _("Unable to identify the selected application process")
 		if session.processId == os.getpid():
-			return _("請使用 NVDA 輸出裝置快捷鍵切換 NVDA 的播放裝置")
+			return _("Use the NVDA output device shortcuts to change NVDA playback device")
 		devices = self._backend.listDevices(kind)
 		if not devices:
-			return _("沒有任何輸出裝置") if kind is DeviceKind.PLAYBACK else _("沒有任何輸入裝置")
+			return _("No output devices") if kind is DeviceKind.PLAYBACK else _("No input devices")
 		key = (session.processId, kind)
 		currentIndex = self._sessionDeviceIndexes.get(key, -1 if offset > 0 else 0)
 		newIndex = (currentIndex + offset) % len(devices)
@@ -767,7 +767,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("下一個音訊應用程式播放裝置"),
+		description=_("Next playback device for the selected audio application"),
 		gestures=[
 			"kb:control+windows+alt+numpadmultiply",
 			"kb(laptop):control+windows+alt+]",
@@ -781,7 +781,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("上一個音訊應用程式播放裝置"),
+		description=_("Previous playback device for the selected audio application"),
 		gestures=[
 			"kb:shift+control+windows+alt+numpadmultiply",
 			"kb(laptop):shift+control+windows+alt+]",
@@ -795,7 +795,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("下一個音訊應用程式錄音裝置"),
+		description=_("Next recording device for the selected audio application"),
 		gestures=[
 			"kb:control+windows+alt+numpaddivide",
 			"kb(laptop):control+windows+alt+[",
@@ -809,7 +809,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("上一個音訊應用程式錄音裝置"),
+		description=_("Previous recording device for the selected audio application"),
 		gestures=[
 			"kb:shift+control+windows+alt+numpaddivide",
 			"kb(laptop):shift+control+windows+alt+[",
@@ -823,7 +823,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("重設所有音訊應用程式的裝置；連按兩次重設音量並取消靜音"),
+		description=_("Reset devices for all audio applications; press twice to reset volume and unmute"),
 		gestures=[
 			"kb:control+windows+alt+numpadminus",
 			"kb(laptop):control+windows+alt+backspace",
@@ -833,22 +833,22 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if scriptHandler.getLastScriptRepeatCount() == 0:
 			def resetDevices() -> str:
 				if not self._backend.listSessions():
-					return _("沒有任何音訊應用程式")
+					return _("No audio applications")
 				self._backend.resetAllSessionDevices()
 				self._sessionDeviceIndexes.clear()
-				return _("已重設所有音訊應用程式的播放與錄音裝置")
+				return _("Playback and recording devices reset for all audio applications")
 			self._run(resetDevices, "Unable to reset application audio devices")
 		else:
 			def resetVolumes() -> str:
 				if not self._backend.listSessions():
-					return _("沒有任何音訊應用程式")
+					return _("No audio applications")
 				self._backend.resetAllSessionVolumes()
-				return _("已將所有音訊應用程式音量重設為 100 並取消靜音")
+				return _("All audio application volumes set to 100 and unmuted")
 			self._run(resetVolumes, "Unable to reset application audio volumes")
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("降低預設麥克風增量（dB）"),
+		description=_("Decrease default microphone boost (dB)"),
 		gestures=["kb:control+shift+numpad2"],
 	)
 	def script_defaultMicrophoneBoostDown(self, gesture):
@@ -859,7 +859,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("提高預設麥克風增量（dB）"),
+		description=_("Increase default microphone boost (dB)"),
 		gestures=["kb:control+shift+numpad8"],
 	)
 	def script_defaultMicrophoneBoostUp(self, gesture):
@@ -870,33 +870,33 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def _changeDefaultMicrophoneBoost(self, direction: int) -> str:
 		# 硬體增量與 0～100 的麥克風音量各自獨立，因此不用更動音量鎖定。
-		from .._audioManager.microphoneBoost import (
+		from .._enhanceAudioManager.microphoneBoost import (
 			BoostNotSupportedError, NoMicrophoneError, changeDefaultBoost,
 		)
 		try:
 			levels = changeDefaultBoost(direction)
 		except NoMicrophoneError:
-			return _("沒有任何輸入裝置")
+			return _("No input devices")
 		except BoostNotSupportedError:
-			return _("預設麥克風未提供可辨識的增量（dB）控制")
+			return _("The default microphone has no recognizable boost (dB) control")
 		# 多聲道值相同時只報一次；不同時依聲道順序報讀。
 		values = [f"{value:g}" for value in levels]
 		levelText = values[0] if len(set(values)) == 1 else "、".join(values)
-		return _("麥克風增量 {level} dB").format(level=levelText)
+		return _("Microphone boost {level} dB").format(level=levelText)
 
 	def _toggleDefaultDeviceMute(self, kind: DeviceKind) -> str:
 		result = self._backend.toggleDefaultMute(kind)
 		if result is None:
-			return _("沒有任何輸出裝置") if kind is DeviceKind.PLAYBACK else _("沒有任何輸入裝置")
+			return _("No output devices") if kind is DeviceKind.PLAYBACK else _("No input devices")
 		muted, target = result
-		return _("{state}，{name}").format(
-			state=_("靜音") if muted else _("取消靜音"),
+		return _("{state}, {name}").format(
+			state=_("Muted") if muted else _("Unmuted"),
 			name=target.name,
 		)
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("切換預設麥克風靜音"),
+		description=_("Toggle mute for the default microphone"),
 		gestures=[
 			"kb:shift+control+windows+alt+numpad2",
 			"kb(laptop):shift+control+windows+alt+downarrow",
@@ -910,7 +910,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("切換預設系統聲音靜音"),
+		description=_("Toggle mute for the default playback device"),
 		gestures=[
 			"kb:shift+control+windows+alt+numpad5",
 			"kb(laptop):shift+control+windows+alt+uparrow",
@@ -924,7 +924,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("切換目前視窗應用程式靜音"),
+		description=_("Toggle mute for the foreground application"),
 		gestures=[
 			"kb:shift+control+windows+alt+numpad8",
 			"kb(laptop):shift+control+windows+alt+space",
@@ -935,10 +935,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			focus = api.getFocusObject()
 			result = self._backend.toggleProcessMute(focus.processID)
 			if result is None:
-				return _("目前視窗沒有可控制的音訊工作階段")
+				return _("The foreground application has no controllable audio session")
 			muted, name = result
-			return _("{state}，{name}").format(
-				state=_("靜音") if muted else _("取消靜音"),
+			return _("{state}, {name}").format(
+				state=_("Muted") if muted else _("Unmuted"),
 				name=name,
 			)
 		self._run(toggleWindow, "Unable to toggle the current window mute state")
@@ -947,7 +947,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		"""依 NVDA 2026.1.1 的 mmdevice 與 audio 設定切換語音輸出。"""
 		devices = list(mmdevice.getOutputDevices(includeDefault=True))
 		if not devices:
-			return _("沒有任何 NVDA 輸出裝置")
+			return _("No NVDA output devices")
 		current = config.conf["audio"]["outputDevice"]
 		currentIndex = next((index for index, device in enumerate(devices) if device.id == current), 0)
 		target = devices[(currentIndex + offset) % len(devices)]
@@ -957,4 +957,4 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			raise RuntimeError("NVDA synthesizer could not be reloaded")
 		tones.terminate()
 		tones.initialize()
-		return _("NVDA 輸出裝置：{name}").format(name=target.friendlyName)
+		return _("NVDA output device: {name}").format(name=target.friendlyName)

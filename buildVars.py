@@ -9,10 +9,10 @@ def _(text):
 
 
 addon_info = {
-	"addon_name": "audioManager",
-	"addon_summary": _("Enhance Audio Manager 音訊管理器"),
-	"addon_description": _("以鍵盤管理 Windows 音訊裝置、應用程式音量及 NVDA 輸出裝置。"),
-	"addon_version": "2.0.6",
+	"addon_name": "enhanceAudioManager",
+	"addon_summary": _("Enhance Audio Manager"),
+	"addon_description": _("Manage Windows audio devices, application volume, and NVDA output devices from the keyboard."),
+	"addon_version": "1.0",
 	"addon_author": "圓臉",
 	"addon_url": "https://github.com/maydayrag/enhance-audio-manager",
 	"addon_sourceURL": "https://github.com/maydayrag/enhance-audio-manager",
@@ -24,10 +24,10 @@ addon_info = {
 	"addon_licenseURL": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
 }
 
-pythonSources = ["addon/globalPlugins/audioManager/__init__.py", "addon/globalPlugins/_audioManager/*.py"]
+pythonSources = ["addon/globalPlugins/enhanceAudioManager/__init__.py", "addon/globalPlugins/_enhanceAudioManager/*.py"]
 i18nSources = pythonSources + ["buildVars.py"]
 excludedFiles = ["**/__pycache__/**", "**/*.pyc"]
-baseLanguage = "zh_TW"
+baseLanguage = "en"
 markdownExtensions = []
 brailleTables = {}
 symbolDictionaries = {}

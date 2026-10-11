@@ -1,11 +1,17 @@
 $ErrorActionPreference = "Stop"
 $projectRoot = $PSScriptRoot
 $addonRoot = Join-Path $projectRoot "addon"
-$vendorRoot = Join-Path $addonRoot "globalPlugins\vendor"
+$vendorRoot = Join-Path $addonRoot "globalPlugins\enhanceAudioManager\vendor"
 $distRoot = Join-Path $projectRoot "dist"
 $stagingRoot = Join-Path $env:TEMP "enhanceAudioManager-addon-staging"
 $resolvedTempRoot = [System.IO.Path]::GetFullPath($env:TEMP).TrimEnd([System.IO.Path]::DirectorySeparatorChar)
 $resolvedStagingRoot = [System.IO.Path]::GetFullPath($stagingRoot)
+
+# Compile both language catalogs before copying files into the installation package.
+python -m pip install --disable-pip-version-check "polib==1.2.0"
+if ($LASTEXITCODE -ne 0) { throw "Translation build dependency installation failed." }
+python (Join-Path $projectRoot "build_translations.py")
+if ($LASTEXITCODE -ne 0) { throw "Translation compilation failed." }
 
 if (-not $resolvedStagingRoot.StartsWith($resolvedTempRoot + [System.IO.Path]::DirectorySeparatorChar)) {
 	throw "Refusing to use a staging directory outside the temporary directory."
@@ -34,8 +40,8 @@ if ($LASTEXITCODE -ge 8) {
 }
 
 New-Item -ItemType Directory -Force -Path $distRoot | Out-Null
-$zipPath = Join-Path $distRoot "enhanceAudioManager-2.0.6.zip"
-$addonPath = Join-Path $distRoot "enhanceAudioManager-2.0.6.nvda-addon"
+$zipPath = Join-Path $distRoot "enhanceAudioManager-1.0.zip"
+$addonPath = Join-Path $distRoot "enhanceAudioManager-1.0.nvda-addon"
 if (Test-Path -LiteralPath $zipPath) { Remove-Item -LiteralPath $zipPath -Force }
 if (Test-Path -LiteralPath $addonPath) { Remove-Item -LiteralPath $addonPath -Force }
 Compress-Archive -Path (Join-Path $stagingRoot "*") -DestinationPath $zipPath

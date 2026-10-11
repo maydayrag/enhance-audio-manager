@@ -1,41 +1,54 @@
-# Enhance Audio Manager 音訊管理器
+# Enhance Audio Manager
 
-作者：圓臉
+Enhance Audio Manager 1.0 is an NVDA add-on for controlling Windows audio from the keyboard. Manage playback and recording devices, application volume, microphone boost, and NVDA's output device with speech and braille feedback.
 
-原始碼：https://github.com/maydayrag/enhance-audio-manager
+Requires NVDA 2026.1.1 or later. English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.
 
-這是針對 NVDA 2026.1.1 建立的全新音訊管理附加元件。它使用 Windows Core Audio，並提供可在 NVDA「輸入手勢」對話框重新設定的鍵盤指令。
+## Getting started
 
-播放與錄音裝置會在瀏覽及靜音切換前重新同步。連續調整音量時會沿用目前介面並立即顯示每一步的新數值；介面失效時才重新同步並重試。插入的裝置會加入清單，已移除的裝置不會繼續顯示或被操作。
+Download the installation package from [version 1.0](https://github.com/maydayrag/enhance-audio-manager/releases/tag/v1.0). User guides are included in [English](addon/doc/en/readme.html) and [Traditional Chinese](addon/doc/zh_TW/readme.html).
 
-沒有裝置或音訊應用程式屬於正常狀態，不會寫入 NVDA 記錄；附加元件會依類型直接報讀沒有任何輸出裝置、輸入裝置、音訊應用程式或 NVDA 輸出裝置。
+Open `enhanceAudioManager-1.0.nvda-addon` with NVDA running, follow the installation prompts, and restart NVDA when prompted.
 
-## 建置
+Use the shortcuts below to select a playback device, recording device, or audio application. Then adjust its volume, toggle mute, or change its device as needed. Volume changes use 1% steps. Device and application lists do not wrap; a short beep indicates the beginning or end of a list. Unavailable devices and empty lists are announced.
 
-執行 `powershell -ExecutionPolicy Bypass -File .\build.ps1`。完成品位於 `dist\enhanceAudioManager-2.0.6.nvda-addon`。
+When NVDA starts, the add-on unmutes active playback devices that are muted.
 
-第三方套件固定為 NVDA 2026.1.1 使用的 `pycaw 20251023`、`comtypes 1.4.13`，以及 `psutil 7.2.1`；建置腳本會將它們一起封裝，避免依賴 NVDA 私下附帶的套件。
+To customize shortcuts, open NVDA's **Preferences > Input gestures** and find the **Enhance Audio Manager** category. Laptop shortcuts use NVDA's laptop keyboard layout.
 
-## 變更紀錄
+## Keyboard shortcuts
 
-### 2.0.6
+In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to the numeric keypad.
 
-- 名稱改為 Enhance Audio Manager；同步更新附加元件清單、輸入手勢分類、文件及安裝包檔名。
-- 保留內部識別碼 `audioManager`、設定區段及外掛模組名稱，讓既有安裝與自訂手勢延續使用。
+| Action | Desktop shortcut | Laptop shortcut |
+| --- | --- | --- |
+| Previous playback device | Base+Numpad 4 | Base+Page Up |
+| Next playback device | Base+Numpad 6 | Base+Page Down |
+| Previous recording device | Base+Numpad 1 | Base+Home |
+| Next recording device | Base+Numpad 3 | Base+End |
+| Previous audio application | Base+Numpad 7 | Base+Left Arrow |
+| Next audio application | Base+Numpad 9 | Base+Right Arrow |
+| Increase selected target's volume | Base+Numpad 8 | Base+Up Arrow |
+| Decrease selected target's volume | Base+Numpad 2 | Base+Down Arrow |
+| Toggle selected target's mute | Base+Numpad 5 | Base+Space |
+| Set selected device as Windows default | Base+Numpad Enter | Base+Enter |
+| Next NVDA output device | Base+Numpad Plus | Base+Backslash |
+| Previous NVDA output device | Shift+Base+Numpad Plus | Shift+Base+Backslash |
+| Lock or unlock default microphone volume | Base+Numpad Delete | Base+Delete |
+| Next playback device for selected application | Base+Numpad Multiply | Base+Right Bracket |
+| Previous playback device for selected application | Shift+Base+Numpad Multiply | Shift+Base+Right Bracket |
+| Next recording device for selected application | Base+Numpad Divide | Base+Left Bracket |
+| Previous recording device for selected application | Shift+Base+Numpad Divide | Shift+Base+Left Bracket |
+| Reset devices for all audio applications | Base+Numpad Minus | Base+Backspace |
+| Toggle default microphone mute | Shift+Base+Numpad 2 | Shift+Base+Down Arrow |
+| Toggle default playback device mute | Shift+Base+Numpad 5 | Shift+Base+Up Arrow |
+| Toggle foreground application's mute | Shift+Base+Numpad 8 | Shift+Base+Space |
 
-### 2.0.5
+Press the reset shortcut twice quickly to set all audio application volumes to 100% and unmute them.
 
-- 修正 Ctrl+Shift+數字鍵盤 2／8 為降低／提高預設麥克風的「麥克風增量／麥克風增強」（dB）。
-- 每次依硬體支援的級距調整一級，例如 0、10、20、30 dB，並報讀實際讀回值。
-- 不更動一般麥克風音量或音量鎖定。沒有預設麥克風或無法辨識增量控制時會報讀提示。
-- 透過 Windows DeviceTopology 尋找預設錄音端點下游、名稱符合系統標準增量名稱或中英文常見名稱的控制；不支援僅有開關、名稱不明或多個候選的增量控制。
+## Microphone boost
 
-### 2.0.4
+- **Ctrl+Shift+Numpad 2:** decrease the default microphone's boost.
+- **Ctrl+Shift+Numpad 8:** increase the default microphone's boost.
 
-- 新增 Ctrl+Shift+數字鍵盤 2／8，直接降低／提高目前 Windows 預設麥克風音量，每次 1%，限制為 0～100。
-- 調整後報讀數值；啟用麥克風音量鎖定時，同步更新鎖定值。
-
-### 2.0.3
-
-- 音量調整成功後立即將每一步的新數值送至 NVDA 語音與點字顯示，不再等待裝置重新列舉或音量讀回。
-- 僅在目前 Core Audio 介面失效時重新同步裝置並重試，提升連續調整音量的反應速度。
+These shortcuts work in both keyboard layouts without selecting a device first. Each press changes boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.
