@@ -2,7 +2,7 @@
 
 Enhance Audio Manager 1.0 is an NVDA add-on for controlling Windows audio from the keyboard. Manage playback and recording devices, application volume, microphone boost, and NVDA's output device with speech and braille feedback.
 
-Requires NVDA 2026.1.1 or later. English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.
+Supports NVDA 2026.2. Minimum required version: NVDA 2026.1.1. English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.
 
 ## Getting started
 
@@ -30,6 +30,8 @@ In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to th
 | Next audio application | Base+Numpad 9 | Base+Right Arrow |
 | Increase selected target's volume | Base+Numpad 8 | Base+Up Arrow |
 | Decrease selected target's volume | Base+Numpad 2 | Base+Down Arrow |
+| Increase microphone boost | Ctrl+Alt+8 | Ctrl+Alt+8 |
+| Decrease microphone boost | Ctrl+Alt+2 | Ctrl+Alt+2 |
 | Toggle selected target's mute | Base+Numpad 5 | Base+Space |
 | Set selected device as Windows default | Base+Numpad Enter | Base+Enter |
 | Next NVDA output device | Base+Numpad Plus | Base+Backslash |
@@ -48,7 +50,4 @@ Press the reset shortcut twice quickly to set all audio application volumes to 1
 
 ## Microphone boost
 
-- **Ctrl+Alt+2:** decrease the default microphone's boost.
-- **Ctrl+Alt+8:** increase the default microphone's boost.
-
-These shortcuts work in both keyboard layouts without selecting a device first. Each press changes boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.
+The microphone boost shortcuts use the number row and work in both keyboard layouts without selecting a device first. Each press changes the default microphone's boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.
