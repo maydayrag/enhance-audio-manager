@@ -1,5 +1,9 @@
 # Enhance Audio Manager
 
+Author: 圓臉
+
+## Introduction
+
 Enhance Audio Manager 1.0 is an NVDA add-on for controlling Windows audio from the keyboard. Manage playback and recording devices, application volume, microphone boost, and NVDA's output device with speech and braille feedback.
 
 Supports NVDA 2026.2. Minimum required version: NVDA 2026.1.1. English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.
