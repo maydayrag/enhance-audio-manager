@@ -5,141 +5,70 @@
 <h1>Enhance Audio Manager</h1>
 <p>Author: roundface</p>
 <h2>Introduction</h2>
-<p>Enhance Audio Manager 1.1 is an NVDA add-on for controlling Windows audio from the keyboard. Manage playback and recording devices, application volume, microphone boost, and NVDA's output device with speech and braille feedback.</p>
-<p>Supports NVDA 2026.2. Minimum required version: NVDA 2026.1.1. English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.</p>
-<h2>Getting started</h2>
-<p>Open <code>enhanceAudioManager-1.1.nvda-addon</code> with NVDA running, follow the installation prompts, and restart NVDA when prompted.</p>
-<p>Use the shortcuts below to select a playback device, recording device, or audio application. Then adjust its volume, toggle mute, or change its device as needed. Volume changes use 1% steps. Device and application lists do not wrap; a short beep indicates the beginning or end of a list. Unavailable devices and empty lists are announced.</p>
-<p>When NVDA starts, the add-on unmutes active playback devices and sets any playback device with zero volume to 50%. Nonzero playback volume is preserved.</p>
-<p>To customize shortcuts, open NVDA's <strong>Preferences &gt; Input gestures</strong> and find the <strong>Enhance Audio Manager</strong> category. Laptop shortcuts use NVDA's laptop keyboard layout.</p>
-<h2>Keyboard shortcuts</h2>
-<p>In the table below, <strong>Base</strong> means <strong>Ctrl+Windows+Alt</strong>. Numpad keys refer to the numeric keypad.</p>
-<table>
-<thead>
-<tr>
-<th>Action</th>
-<th>Desktop shortcut</th>
-<th>Laptop shortcut</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Previous playback device</td>
-<td>Base+Numpad 4</td>
-<td>Base+Page Up</td>
-</tr>
-<tr>
-<td>Next playback device</td>
-<td>Base+Numpad 6</td>
-<td>Base+Page Down</td>
-</tr>
-<tr>
-<td>Previous recording device</td>
-<td>Base+Numpad 1</td>
-<td>Base+Home</td>
-</tr>
-<tr>
-<td>Next recording device</td>
-<td>Base+Numpad 3</td>
-<td>Base+End</td>
-</tr>
-<tr>
-<td>Previous audio application</td>
-<td>Base+Numpad 7</td>
-<td>Base+Left Arrow</td>
-</tr>
-<tr>
-<td>Next audio application</td>
-<td>Base+Numpad 9</td>
-<td>Base+Right Arrow</td>
-</tr>
-<tr>
-<td>Increase selected target's volume</td>
-<td>Base+Numpad 8</td>
-<td>Base+Up Arrow</td>
-</tr>
-<tr>
-<td>Decrease selected target's volume</td>
-<td>Base+Numpad 2</td>
-<td>Base+Down Arrow</td>
-</tr>
-<tr>
-<td>Increase microphone boost</td>
-<td>Ctrl+Windows+Numpad 8</td>
-<td>Ctrl+Windows+Up Arrow</td>
-</tr>
-<tr>
-<td>Decrease microphone boost</td>
-<td>Ctrl+Windows+Numpad 2</td>
-<td>Ctrl+Windows+Down Arrow</td>
-</tr>
-<tr>
-<td>Toggle selected target's mute</td>
-<td>Base+Numpad 5</td>
-<td>Base+Space</td>
-</tr>
-<tr>
-<td>Set selected device as Windows default</td>
-<td>Base+Numpad Enter</td>
-<td>Base+Enter</td>
-</tr>
-<tr>
-<td>Next NVDA output device</td>
-<td>Base+Numpad Plus</td>
-<td>Base+Backslash</td>
-</tr>
-<tr>
-<td>Previous NVDA output device</td>
-<td>Shift+Base+Numpad Plus</td>
-<td>Shift+Base+Backslash</td>
-</tr>
-<tr>
-<td>Lock or unlock default microphone volume</td>
-<td>Base+Numpad Delete</td>
-<td>Base+Delete</td>
-</tr>
-<tr>
-<td>Next playback device for selected application</td>
-<td>Base+Numpad Multiply</td>
-<td>Base+Right Bracket</td>
-</tr>
-<tr>
-<td>Previous playback device for selected application</td>
-<td>Shift+Base+Numpad Multiply</td>
-<td>Shift+Base+Right Bracket</td>
-</tr>
-<tr>
-<td>Next recording device for selected application</td>
-<td>Base+Numpad Divide</td>
-<td>Base+Left Bracket</td>
-</tr>
-<tr>
-<td>Previous recording device for selected application</td>
-<td>Shift+Base+Numpad Divide</td>
-<td>Shift+Base+Left Bracket</td>
-</tr>
-<tr>
-<td>Reset all devices</td>
-<td>Base+Numpad Minus</td>
-<td>Base+Backspace</td>
-</tr>
-<tr>
-<td>Toggle default microphone mute</td>
-<td>Shift+Base+Numpad 2</td>
-<td>Shift+Base+Down Arrow</td>
-</tr>
-<tr>
-<td>Toggle default playback device mute</td>
-<td>Shift+Base+Numpad 5</td>
-<td>Shift+Base+Up Arrow</td>
-</tr>
-<tr>
-<td>Toggle foreground application's mute</td>
-<td>Shift+Base+Numpad 8</td>
-<td>Shift+Base+Space</td>
-</tr>
-</tbody>
-</table>
+<p>Version: 1.1. Control Windows playback and recording devices, application volume, microphone boost, and NVDA's output device from the keyboard, with speech and braille feedback.</p>
+<p>Supports NVDA 2026.2. Minimum required version: NVDA 2026.1.1.</p>
+<p>English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.</p>
+<h2>Installation and operation</h2>
+<p>Open <code>enhanceAudioManager-1.1.nvda-addon</code> with NVDA running, follow the installation prompts, and restart NVDA. Use the shortcuts below to select a playback device, recording device, or audio application, then adjust its volume, mute state, or device. Laptop shortcuts apply to NVDA's laptop keyboard layout.</p>
+<p>To reassign any command, open NVDA's <strong>Input gestures</strong> dialog and search for <strong>Enhance Audio Manager</strong>.</p>
+<p>Each volume adjustment changes the volume by 1%. After a successful adjustment, NVDA immediately announces the current volume and displays it in braille. Lists do not wrap: trying to move past the first or last item produces a short beep.</p>
+<p>After an audio device is connected or disconnected, the add-on refreshes the list of active Windows devices the next time you browse devices or toggle mute. Repeated volume adjustments reuse the current interface; the add-on refreshes it and retries only if that interface becomes invalid.</p>
+<p>An empty list is a normal condition and is not written to the NVDA log. Depending on the operation, the add-on announces that there are no playback devices, recording devices, audio applications, or NVDA output devices.</p>
+<p>When muting, unmuting, or setting a default device, the add-on announces the status first, followed by the device or application name.</p>
+<p>When NVDA starts, the add-on checks all active playback devices, unmutes them, and sets any playback device with zero volume to 50%. Nonzero playback volume is preserved.</p>
+<h2>Default keyboard shortcuts</h2>
+<h3>Desktop layout</h3>
+<ul>
+<li>Previous playback device: Control+Windows+Alt+Numpad 4.</li>
+<li>Next playback device: Control+Windows+Alt+Numpad 6.</li>
+<li>Previous recording device: Control+Windows+Alt+Numpad 1.</li>
+<li>Next recording device: Control+Windows+Alt+Numpad 3.</li>
+<li>Previous audio application: Control+Windows+Alt+Numpad 7.</li>
+<li>Next audio application: Control+Windows+Alt+Numpad 9.</li>
+<li>Increase selected target's volume: Control+Windows+Alt+Numpad 8.</li>
+<li>Decrease selected target's volume: Control+Windows+Alt+Numpad 2.</li>
+<li>Increase microphone boost: Control+Windows+Numpad 8.</li>
+<li>Decrease microphone boost: Control+Windows+Numpad 2.</li>
+<li>Toggle selected target's mute: Control+Windows+Alt+Numpad 5.</li>
+<li>Set selected device as Windows default: Control+Windows+Alt+Numpad Enter.</li>
+<li>Next NVDA output device: Control+Windows+Alt+Numpad Plus.</li>
+<li>Previous NVDA output device: Shift+Control+Windows+Alt+Numpad Plus.</li>
+<li>Lock or unlock default microphone volume: Control+Windows+Alt+Numpad Delete.</li>
+<li>Next playback device for selected application: Control+Windows+Alt+Numpad Multiply.</li>
+<li>Previous playback device for selected application: Shift+Control+Windows+Alt+Numpad Multiply.</li>
+<li>Next recording device for selected application: Control+Windows+Alt+Numpad Divide.</li>
+<li>Previous recording device for selected application: Shift+Control+Windows+Alt+Numpad Divide.</li>
+<li>Reset all devices: Control+Windows+Alt+Numpad Minus. Press twice quickly to set playback devices to 50%, application and recording device volumes to 100%, and unmute them all.</li>
+<li>Toggle default microphone mute: Shift+Control+Windows+Alt+Numpad 2.</li>
+<li>Toggle default playback device mute: Shift+Control+Windows+Alt+Numpad 5.</li>
+<li>Toggle foreground application's mute: Shift+Control+Windows+Alt+Numpad 8.</li>
+</ul>
+<h3>Laptop layout</h3>
+<ul>
+<li>Previous playback device: Control+Windows+Alt+Page Up.</li>
+<li>Next playback device: Control+Windows+Alt+Page Down.</li>
+<li>Previous recording device: Control+Windows+Alt+Home.</li>
+<li>Next recording device: Control+Windows+Alt+End.</li>
+<li>Previous audio application: Control+Windows+Alt+Left Arrow.</li>
+<li>Next audio application: Control+Windows+Alt+Right Arrow.</li>
+<li>Increase selected target's volume: Control+Windows+Alt+Up Arrow.</li>
+<li>Decrease selected target's volume: Control+Windows+Alt+Down Arrow.</li>
+<li>Increase microphone boost: Control+Windows+Up Arrow.</li>
+<li>Decrease microphone boost: Control+Windows+Down Arrow.</li>
+<li>Toggle selected target's mute: Control+Windows+Alt+Space.</li>
+<li>Set selected device as Windows default: Control+Windows+Alt+Enter.</li>
+<li>Next NVDA output device: Control+Windows+Alt+Backslash.</li>
+<li>Previous NVDA output device: Shift+Control+Windows+Alt+Backslash.</li>
+<li>Lock or unlock default microphone volume: Control+Windows+Alt+Delete.</li>
+<li>Next playback device for selected application: Control+Windows+Alt+Right Bracket.</li>
+<li>Previous playback device for selected application: Shift+Control+Windows+Alt+Right Bracket.</li>
+<li>Next recording device for selected application: Control+Windows+Alt+Left Bracket.</li>
+<li>Previous recording device for selected application: Shift+Control+Windows+Alt+Left Bracket.</li>
+<li>Reset all devices: Control+Windows+Alt+Backspace. Press twice quickly to set playback devices to 50%, application and recording device volumes to 100%, and unmute them all.</li>
+<li>Toggle default microphone mute: Shift+Control+Windows+Alt+Down Arrow.</li>
+<li>Toggle default playback device mute: Shift+Control+Windows+Alt+Up Arrow.</li>
+<li>Toggle foreground application's mute: Shift+Control+Windows+Alt+Space.</li>
+</ul>
 <p>Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set all active playback devices (including speakers and headphones) to 50%, set application sessions and active recording devices to 100%, and unmute them all. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.</p>
 <p>Turn off NVDA's Input Help with <strong>NVDA+1</strong> before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.</p>
 </body>
