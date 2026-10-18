@@ -10,7 +10,7 @@
 <h2>Getting started</h2>
 <p>Open <code>enhanceAudioManager-1.1.nvda-addon</code> with NVDA running, follow the installation prompts, and restart NVDA when prompted.</p>
 <p>Use the shortcuts below to select a playback device, recording device, or audio application. Then adjust its volume, toggle mute, or change its device as needed. Volume changes use 1% steps. Device and application lists do not wrap; a short beep indicates the beginning or end of a list. Unavailable devices and empty lists are announced.</p>
-<p>When NVDA starts, the add-on unmutes active playback devices that are muted.</p>
+<p>When NVDA starts, the add-on unmutes active playback devices and sets any playback device with zero volume to 50%. Nonzero playback volume is preserved.</p>
 <p>To customize shortcuts, open NVDA's <strong>Preferences &gt; Input gestures</strong> and find the <strong>Enhance Audio Manager</strong> category. Laptop shortcuts use NVDA's laptop keyboard layout.</p>
 <h2>Keyboard shortcuts</h2>
 <p>In the table below, <strong>Base</strong> means <strong>Ctrl+Windows+Alt</strong>. Numpad keys refer to the numeric keypad.</p>
@@ -140,7 +140,7 @@
 </tr>
 </tbody>
 </table>
-<p>Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set application sessions and all active playback and recording devices (including speakers, headphones, and microphones) to 100% and unmute them. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.</p>
+<p>Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set all active playback devices (including speakers and headphones) to 50%, set application sessions and active recording devices to 100%, and unmute them all. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.</p>
 <p>Turn off NVDA's Input Help with <strong>NVDA+1</strong> before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.</p>
 <h2>Microphone boost</h2>
 <p>The microphone boost shortcuts use the numeric keypad in NVDA's desktop layout and the arrow keys in NVDA's laptop layout. No device selection is needed first. Each press changes the default microphone's boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.</p>

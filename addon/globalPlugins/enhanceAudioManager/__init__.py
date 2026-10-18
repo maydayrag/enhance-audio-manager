@@ -348,18 +348,24 @@ class CoreAudioBackend:
 		return resetCount
 
 	def resetAllDeviceVolumes(self) -> int:
-		"""將所有啟用中的播放與錄音裝置設為最大音量並取消靜音。"""
-		devices = AudioUtilities.GetAllDevices(
-			data_flow=EDataFlow.eAll.value, device_state=DEVICE_STATE.ACTIVE.value,
-		)
+		"""播放裝置設為 50%，錄音裝置設為 100%，並取消靜音。"""
+		devices = []
 		resetCount = 0
 		failed = False
-		for device in devices:
+		for flow, level in ((EDataFlow.eRender.value, 0.5), (EDataFlow.eCapture.value, 1.0)):
+			try:
+				devices.extend((device, level) for device in AudioUtilities.GetAllDevices(
+					data_flow=flow, device_state=DEVICE_STATE.ACTIVE.value,
+				))
+			except Exception:
+				failed = True
+				log.exception("Unable to enumerate audio devices during reset")
+		for device, level in devices:
 			try:
 				volume = device.EndpointVolume
-				volume.SetMasterVolumeLevelScalar(1.0, None)
+				volume.SetMasterVolumeLevelScalar(level, None)
 				volume.SetMute(False, None)
-				if abs(volume.GetMasterVolumeLevelScalar() - 1.0) > 0.0001 or volume.GetMute():
+				if abs(volume.GetMasterVolumeLevelScalar() - level) > 0.0001 or volume.GetMute():
 					raise RuntimeError("Device reset did not retain the requested volume and mute state")
 				resetCount += 1
 			except Exception:
@@ -581,15 +587,21 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		wx.CallAfter(self._unmutePlaybackDevicesOnStartup)
 
 	def _unmutePlaybackDevicesOnStartup(self) -> None:
-		"""NVDA 啟動後，只取消目前確實處於靜音狀態的播放裝置。"""
+		"""NVDA 啟動後解除播放裝置靜音，並將零音量恢復為 50%。"""
 		try:
 			targets = self._backend.listDevices(DeviceKind.PLAYBACK)
 			self._playback.setTargets(targets)
-			for target in targets:
-				if target.muted:
-					target.toggleMute()
 		except Exception:
 			log.exception("Unable to unmute playback devices during Enhance Audio Manager startup")
+			return
+		for target in targets:
+			try:
+				# 使用原始音量值，避免把接近零但非零的音量四捨五入成零。
+				if target.volumeInterface.GetMasterVolumeLevelScalar() == 0:
+					target.setVolume(50)
+				target.volumeInterface.SetMute(False, None)
+			except Exception:
+				log.exception("Unable to restore a playback device during startup")
 
 	def terminate(self):
 		"""NVDA 卸載外掛時停止計時器，避免留下仍在執行的回呼。"""
@@ -913,7 +925,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 						log.exception("Unable to complete part of the audio volume reset")
 				if failed:
 					raise RuntimeError("Audio volume reset was incomplete")
-				return _("Audio application, playback and recording device volumes set to 100 and unmuted")
+				return _("Playback device volumes set to 50; audio application and recording device volumes set to 100; all unmuted")
 			self._run(resetVolumes, "Unable to reset application audio volumes")
 
 	@scriptHandler.script(

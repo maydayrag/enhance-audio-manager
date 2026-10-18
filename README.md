@@ -16,7 +16,7 @@ Open `enhanceAudioManager-1.1.nvda-addon` with NVDA running, follow the installa
 
 Use the shortcuts below to select a playback device, recording device, or audio application. Then adjust its volume, toggle mute, or change its device as needed. Volume changes use 1% steps. Device and application lists do not wrap; a short beep indicates the beginning or end of a list. Unavailable devices and empty lists are announced.
 
-When NVDA starts, the add-on unmutes active playback devices that are muted.
+When NVDA starts, the add-on unmutes active playback devices and sets any playback device with zero volume to 50%. Nonzero playback volume is preserved.
 
 To customize shortcuts, open NVDA's **Preferences > Input gestures** and find the **Enhance Audio Manager** category. Laptop shortcuts use NVDA's laptop keyboard layout.
 
@@ -50,7 +50,7 @@ In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to th
 | Toggle default playback device mute | Shift+Base+Numpad 5 | Shift+Base+Up Arrow |
 | Toggle foreground application's mute | Shift+Base+Numpad 8 | Shift+Base+Space |
 
-Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set application sessions and all active playback and recording devices (including speakers, headphones, and microphones) to 100% and unmute them. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.
+Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set all active playback devices (including speakers and headphones) to 50%, set application sessions and active recording devices to 100%, and unmute them all. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.
 
 Turn off NVDA's Input Help with **NVDA+1** before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.
 

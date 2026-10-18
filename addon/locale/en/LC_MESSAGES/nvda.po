@@ -10,11 +10,11 @@ msgstr ""
 
 #: addon/globalPlugins/enhanceAudioManager/__init__.py:916
 msgid ""
-"Audio application, playback and recording device volumes set to 100 and "
-"unmuted"
+"Playback device volumes set to 50; audio application and recording device "
+"volumes set to 100; all unmuted"
 msgstr ""
-"Audio application, playback and recording device volumes set to 100 and "
-"unmuted"
+"Playback device volumes set to 50; audio application and recording device "
+"volumes set to 100; all unmuted"
 
 #: addon/globalPlugins/enhanceAudioManager/__init__.py:565
 msgid "Audio applications"

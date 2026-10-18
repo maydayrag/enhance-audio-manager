@@ -16,13 +16,14 @@ def load_reset_code():
     backend = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == "CoreAudioBackend")
     plugin = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == "GlobalPlugin")
     plugin.bases = []
-    plugin.body = [node for node in plugin.body if isinstance(node, ast.FunctionDef) and node.name in ("script_resetSessions", "_run")]
+    plugin.body = [node for node in plugin.body if isinstance(node, ast.FunctionDef) and node.name in ("script_resetSessions", "_run", "_unmutePlaybackDevicesOnStartup")]
     for method in plugin.body:
         method.decorator_list = []
     module = ast.Module(body=[ast.ImportFrom(module="__future__", names=[ast.alias(name="annotations")], level=0), backend, plugin], type_ignores=[])
     namespace = {
         "AudioUtilities": Mock(),
-        "EDataFlow": SimpleNamespace(eRender=SimpleNamespace(value=0), eAll=SimpleNamespace(value=2)),
+        "EDataFlow": SimpleNamespace(eRender=SimpleNamespace(value=0), eCapture=SimpleNamespace(value=1)),
+        "DeviceKind": SimpleNamespace(PLAYBACK=0),
         "config": SimpleNamespace(conf={"enhanceAudioManager": {"microphoneVolume": 40}}),
         "DEVICE_STATE": SimpleNamespace(ACTIVE=SimpleNamespace(value=1)),
         "ISimpleAudioVolume": object(),
@@ -137,14 +138,14 @@ class ResetTests(unittest.TestCase):
         plugin._backend.resetAllSessionVolumes.assert_called_once_with()
         plugin._backend.resetAllSessionDevices.assert_not_called()
         plugin._backend.resetAllDeviceVolumes.assert_called_once_with()
-        self.code["ui"].message.assert_called_once_with("Audio application, playback and recording device volumes set to 100 and unmuted")
+        self.code["ui"].message.assert_called_once_with("Playback device volumes set to 50; audio application and recording device volumes set to 100; all unmuted")
 
     def test_double_press_with_no_sessions_still_resets_devices(self):
         plugin = self.make_plugin(1)
         plugin._backend.resetAllSessionVolumes.return_value = 0
         plugin.script_resetSessions(None)
         plugin._backend.resetAllDeviceVolumes.assert_called_once_with()
-        self.code["ui"].message.assert_called_once_with("Audio application, playback and recording device volumes set to 100 and unmuted")
+        self.code["ui"].message.assert_called_once_with("Playback device volumes set to 50; audio application and recording device volumes set to 100; all unmuted")
 
     def test_reset_updates_enabled_microphone_lock(self):
         plugin = self.make_plugin(1)
@@ -168,10 +169,10 @@ class ResetTests(unittest.TestCase):
 
     def test_device_reset_covers_render_and_capture(self):
         volumes = [Volume(), Volume(0.7, False)]
-        self.utilities.GetAllDevices.return_value = [SimpleNamespace(EndpointVolume=v) for v in volumes]
+        self.utilities.GetAllDevices.side_effect = [[SimpleNamespace(EndpointVolume=volumes[0])], [SimpleNamespace(EndpointVolume=volumes[1])]]
         self.assertEqual(self.backend.resetAllDeviceVolumes(), 2)
-        self.utilities.GetAllDevices.assert_called_once_with(data_flow=2, device_state=1)
-        self.assertTrue(all((v.level, v.muted) == (1.0, False) for v in volumes))
+        self.assertEqual([c.kwargs for c in self.utilities.GetAllDevices.call_args_list], [dict(data_flow=0, device_state=1), dict(data_flow=1, device_state=1)])
+        self.assertEqual([(v.level, v.muted) for v in volumes], [(0.5, False), (1.0, False)])
 
     def test_broken_endpoint_does_not_skip_healthy_endpoint(self):
         healthy = Volume()
@@ -191,6 +192,40 @@ class ResetTests(unittest.TestCase):
         plugin.script_resetSessions(None)
         self.assertTrue(plugin._sessionDeviceIndexes)
         self.code["ui"].message.assert_called_once_with("Audio operation failed; details have been written to the NVDA log")
+
+    def test_startup_unmutes_and_only_raises_exact_zero(self):
+        for level in (0, 0.001, 0.3, 1.0):
+            for muted in (False, True):
+                with self.subTest(level=level, muted=muted):
+                    plugin = self.make_plugin(0)
+                    volume = Volume(level, muted)
+                    target = SimpleNamespace(volumeInterface=volume, setVolume=Mock(side_effect=lambda value: volume.SetMasterVolume(value / 100, None)))
+                    plugin._playback = Mock()
+                    plugin._backend.listDevices.return_value = [target]
+                    plugin._unmutePlaybackDevicesOnStartup()
+                    self.assertEqual(volume.level, 0.5 if level == 0 else level)
+                    self.assertFalse(volume.muted)
+                    plugin._backend.listDevices.assert_called_once_with(0)
+                    if level != 0:
+                        target.setVolume.assert_not_called()
+
+    def test_startup_continues_after_device_failure(self):
+        plugin = self.make_plugin(0)
+        plugin._playback = Mock()
+        broken = SimpleNamespace(volumeInterface=Mock())
+        broken.volumeInterface.GetMasterVolumeLevelScalar.side_effect = OSError("Disconnected")
+        healthy = Volume(0, True)
+        target = SimpleNamespace(volumeInterface=healthy, setVolume=lambda value: healthy.SetMasterVolume(value / 100, None))
+        plugin._backend.listDevices.return_value = [broken, target]
+        plugin._unmutePlaybackDevicesOnStartup()
+        self.assertEqual((healthy.level, healthy.muted), (0.5, False))
+
+    def test_render_enumeration_failure_still_resets_capture(self):
+        healthy = Volume()
+        self.utilities.GetAllDevices.side_effect = [OSError("Disconnected"), [SimpleNamespace(EndpointVolume=healthy)]]
+        with self.assertRaises(RuntimeError):
+            self.backend.resetAllDeviceVolumes()
+        self.assertEqual((healthy.level, healthy.muted), (1.0, False))
 
 
 if __name__ == "__main__":
