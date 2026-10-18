@@ -45,7 +45,7 @@ In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to th
 | Previous playback device for selected application | Shift+Base+Numpad Multiply | Shift+Base+Right Bracket |
 | Next recording device for selected application | Base+Numpad Divide | Base+Left Bracket |
 | Previous recording device for selected application | Shift+Base+Numpad Divide | Shift+Base+Left Bracket |
-| Reset devices for all audio applications | Base+Numpad Minus | Base+Backspace |
+| Reset all devices | Base+Numpad Minus | Base+Backspace |
 | Toggle default microphone mute | Shift+Base+Numpad 2 | Shift+Base+Down Arrow |
 | Toggle default playback device mute | Shift+Base+Numpad 5 | Shift+Base+Up Arrow |
 | Toggle foreground application's mute | Shift+Base+Numpad 8 | Shift+Base+Space |
@@ -53,7 +53,3 @@ In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to th
 Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set all active playback devices (including speakers and headphones) to 50%, set application sessions and active recording devices to 100%, and unmute them all. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.
 
 Turn off NVDA's Input Help with **NVDA+1** before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.
-
-## Microphone boost
-
-The microphone boost shortcuts use the numeric keypad in NVDA's desktop layout and the arrow keys in NVDA's laptop layout. No device selection is needed first. Each press changes the default microphone's boost by one hardware-supported step, such as 0, 10, 20, or 30 dB, and announces the resulting value. Boost is separate from ordinary microphone volume and its volume lock. If no default microphone or recognizable boost control is available, the add-on announces this.

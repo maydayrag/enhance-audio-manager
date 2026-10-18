@@ -169,11 +169,11 @@ msgstr "Recording devices"
 
 #: addon/globalPlugins/enhanceAudioManager/__init__.py:886
 msgid ""
-"Reset devices for all audio applications; press twice to reset application "
-"and device volumes and unmute"
+"Reset all devices; press twice to reset application and device volumes and "
+"unmute"
 msgstr ""
-"Reset devices for all audio applications; press twice to reset application "
-"and device volumes and unmute"
+"Reset all devices; press twice to reset application and device volumes and "
+"unmute"
 
 #: addon/globalPlugins/enhanceAudioManager/__init__.py:646
 #: addon/globalPlugins/enhanceAudioManager/__init__.py:736

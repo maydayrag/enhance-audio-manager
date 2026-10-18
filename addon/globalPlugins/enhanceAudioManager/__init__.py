@@ -895,7 +895,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("Reset devices for all audio applications; press twice to reset application and device volumes and unmute"),
+		description=_("Reset all devices; press twice to reset application and device volumes and unmute"),
 		gestures=[
 			"kb:control+windows+alt+numpadminus",
 			"kb(laptop):control+windows+alt+backspace",
