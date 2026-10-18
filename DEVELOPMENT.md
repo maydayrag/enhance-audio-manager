@@ -8,7 +8,7 @@ With Python available on PATH, run:
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-The output is `dist/enhanceAudioManager-1.0.nvda-addon`. The build bundles `comtypes 1.4.13`, `pycaw 20251023`, and `psutil 7.2.1`. It uses `polib 1.2.0` to compile the translation catalogs before packaging.
+The output is `dist/enhanceAudioManager-1.1.nvda-addon`. The build bundles `comtypes 1.4.13`, `pycaw 20251023`, and `psutil 7.2.1`. It uses `polib 1.2.0` to compile the translation catalogs before packaging.
 
 Edit `addon/locale/en/LC_MESSAGES/nvda.po` and `addon/locale/zh_TW/LC_MESSAGES/nvda.po` to maintain translations. English is the source language. The build checks coverage and formatting placeholders and regenerates `nvda.mo`. Localized manifest files provide the translated name and description. User guides are in `addon/doc/en` and `addon/doc/zh_TW`.
 
@@ -31,3 +31,12 @@ The internal add-on ID and configuration section are `enhanceAudioManager`. The 
 Microphone boost uses Windows DeviceTopology and IAudioVolumeLevel. Interface definitions were checked against Windows SDK 10.0.28000.0 (`devicetopology.idl` and `ksmedia.h`). Controls must have a recognized boost name and support dB volume; missing or ambiguous controls are rejected.
 
 Automated verification does not replace testing installation, language selection, and shortcuts in a running NVDA instance or testing microphone boost on supported physical hardware.
+
+## Reset verification
+
+- NVDA 2026.2 `source/inputCore.py` (`_inputHelpCaptor`) suppresses command execution during Input Help. The local NVDA log showed the reset gesture being described in this mode.
+- `source/scriptHandler.py` documents `getLastScriptRepeatCount`: zero for a first press and one for a repeated press. The reset command keeps the documented single/double press behavior.
+- The bundled pycaw `GetAllSessions` reads only the default multimedia playback endpoint. Volume reset therefore enumerates sessions on every active render endpoint through each device's `AudioSessionManager`.
+- Microsoft documents [GetSessionEnumerator](https://learn.microsoft.com/en-us/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessionmanager2-getsessionenumerator), [SetMasterVolume](https://learn.microsoft.com/en-us/windows/win32/api/audioclient/nf-audioclient-isimpleaudiovolume-setmastervolume), and [SetMute](https://learn.microsoft.com/en-us/windows/win32/api/audioclient/nf-audioclient-isimpleaudiovolume-setmute). Reset uses 1.0 and false, then reads back both values.
+- Saved device preferences are cleared without requiring a current audio session. The existing policy interface layout was cross-checked against [EarTrumpet's 21H2 interface](https://github.com/File-New-Project/EarTrumpet/blob/master/EarTrumpet/Interop/MMDeviceAPI/IAudioPolicyConfigFactoryVariantFor21H2.cs); this Windows internal interface remains undocumented by Microsoft.
+- `tests/test_reset.py` executes the actual reset methods with simulated endpoints and sessions. It covers multiple endpoints, empty lists, disappeared sessions/devices, failed readback, cached routes, and both press counts without altering the user's audio settings.

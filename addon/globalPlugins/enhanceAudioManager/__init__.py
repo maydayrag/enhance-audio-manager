@@ -32,6 +32,7 @@ import ui
 from utils import mmdevice
 import wx
 from comtypes import COMError
+from pycaw.api.audioclient import ISimpleAudioVolume
 from pycaw.constants import DEVICE_STATE, EDataFlow, ERole
 from pycaw.utils import AudioUtilities
 
@@ -307,11 +308,43 @@ class CoreAudioBackend:
 	def resetAllSessionDevices(self) -> None:
 		self._policy.clearAll()
 
-	def resetAllSessionVolumes(self) -> None:
-		for session in self.listSessions():
-			session.setVolume(100)
-			if session.muted:
-				session.toggleMute()
+	def resetAllSessionVolumes(self) -> int:
+		"""重設每個啟用中播放裝置的工作階段，並回傳成功處理的數量。"""
+		# GetAllSessions 只查看預設喇叭，會漏掉指定耳機等其他輸出的程式。
+		devices = AudioUtilities.GetAllDevices(
+			data_flow=EDataFlow.eRender.value,
+			device_state=DEVICE_STATE.ACTIVE.value,
+		)
+		resetCount = 0
+		failed = False
+		for device in devices:
+			try:
+				enumerator = device.AudioSessionManager.GetSessionEnumerator()
+				count = enumerator.GetCount()
+			except Exception:
+				failed = True
+				log.exception("Unable to enumerate sessions on a playback device during reset")
+				continue
+			for index in range(count):
+				try:
+					control = enumerator.GetSession(index)
+					if control is None:
+						continue
+					volume = control.QueryInterface(ISimpleAudioVolume)
+					volume.SetMasterVolume(1.0, None)
+					# 直接取消靜音，避免切換狀態時意外把已解除靜音的程式靜音。
+					volume.SetMute(False, None)
+					if abs(volume.GetMasterVolume() - 1.0) > 0.0001 or volume.GetMute():
+						raise RuntimeError("Audio session reset did not retain the requested volume and mute state")
+					resetCount += 1
+				except Exception:
+					# 單一程式結束或裝置移除，不應阻止其餘程式重設。
+					failed = True
+					log.exception("Unable to reset an audio session")
+		if failed:
+			# 已盡力處理其餘工作階段；有失敗時不可報讀全部成功。
+			raise RuntimeError("One or more audio sessions could not be reset")
+		return resetCount
 
 	def toggleDefaultMute(self, kind: DeviceKind) -> tuple[bool, AudioTarget] | None:
 		target = self.getDefaultDevice(kind)
@@ -832,17 +865,15 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_resetSessions(self, gesture):
 		if scriptHandler.getLastScriptRepeatCount() == 0:
 			def resetDevices() -> str:
-				if not self._backend.listSessions():
-					return _("No audio applications")
+				# 即使程式目前沒有播放聲音，也可能保存了自訂裝置設定。
 				self._backend.resetAllSessionDevices()
 				self._sessionDeviceIndexes.clear()
 				return _("Playback and recording devices reset for all audio applications")
 			self._run(resetDevices, "Unable to reset application audio devices")
 		else:
 			def resetVolumes() -> str:
-				if not self._backend.listSessions():
+				if self._backend.resetAllSessionVolumes() == 0:
 					return _("No audio applications")
-				self._backend.resetAllSessionVolumes()
 				return _("All audio application volumes set to 100 and unmuted")
 			self._run(resetVolumes, "Unable to reset application audio volumes")
 

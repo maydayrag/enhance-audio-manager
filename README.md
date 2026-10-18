@@ -4,15 +4,15 @@ Author: roundface
 
 ## Introduction
 
-Enhance Audio Manager 1.0 is an NVDA add-on for controlling Windows audio from the keyboard. Manage playback and recording devices, application volume, microphone boost, and NVDA's output device with speech and braille feedback.
+Enhance Audio Manager 1.1 is an NVDA add-on for controlling Windows audio from the keyboard. Manage playback and recording devices, application volume, microphone boost, and NVDA's output device with speech and braille feedback.
 
 Supports NVDA 2026.2. Minimum required version: NVDA 2026.1.1. English and Traditional Chinese interface translations and user guides are included. NVDA selects the language using its own language setting.
 
 ## Getting started
 
-Download the installation package from [version 1.0](https://github.com/maydayrag/enhance-audio-manager/releases/tag/v1.0). User guides are included in [English](addon/doc/en/readme.html) and [Traditional Chinese](addon/doc/zh_TW/readme.html).
+Download the installation package from [version 1.1](https://github.com/maydayrag/enhance-audio-manager/releases/tag/v1.1). User guides are included in [English](addon/doc/en/readme.html) and [Traditional Chinese](addon/doc/zh_TW/readme.html).
 
-Open `enhanceAudioManager-1.0.nvda-addon` with NVDA running, follow the installation prompts, and restart NVDA when prompted.
+Open `enhanceAudioManager-1.1.nvda-addon` with NVDA running, follow the installation prompts, and restart NVDA when prompted.
 
 Use the shortcuts below to select a playback device, recording device, or audio application. Then adjust its volume, toggle mute, or change its device as needed. Volume changes use 1% steps. Device and application lists do not wrap; a short beep indicates the beginning or end of a list. Unavailable devices and empty lists are announced.
 
@@ -50,7 +50,9 @@ In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to th
 | Toggle default playback device mute | Shift+Base+Numpad 5 | Shift+Base+Up Arrow |
 | Toggle foreground application's mute | Shift+Base+Numpad 8 | Shift+Base+Space |
 
-Press the reset shortcut twice quickly to set all audio application volumes to 100% and unmute them.
+Press the reset shortcut once to clear saved playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set the current application sessions on all active playback devices to 100% and unmute them. This does not change speaker volume or microphone boost.
+
+Turn off NVDA's Input Help with **NVDA+1** before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.
 
 ## Microphone boost
 

@@ -40,8 +40,8 @@ if ($LASTEXITCODE -ge 8) {
 }
 
 New-Item -ItemType Directory -Force -Path $distRoot | Out-Null
-$zipPath = Join-Path $distRoot "enhanceAudioManager-1.0.zip"
-$addonPath = Join-Path $distRoot "enhanceAudioManager-1.0.nvda-addon"
+$zipPath = Join-Path $distRoot "enhanceAudioManager-1.1.zip"
+$addonPath = Join-Path $distRoot "enhanceAudioManager-1.1.nvda-addon"
 if (Test-Path -LiteralPath $zipPath) { Remove-Item -LiteralPath $zipPath -Force }
 if (Test-Path -LiteralPath $addonPath) { Remove-Item -LiteralPath $addonPath -Force }
 Compress-Archive -Path (Join-Path $stagingRoot "*") -DestinationPath $zipPath

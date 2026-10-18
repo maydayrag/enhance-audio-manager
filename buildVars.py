@@ -12,7 +12,7 @@ addon_info = {
 	"addon_name": "enhanceAudioManager",
 	"addon_summary": _("Enhance Audio Manager"),
 	"addon_description": _("Manage Windows audio devices, application volume, and NVDA output devices from the keyboard."),
-	"addon_version": "1.0",
+	"addon_version": "1.1",
 	"addon_author": "圓臉",
 	"addon_url": "https://github.com/maydayrag/enhance-audio-manager",
 	"addon_sourceURL": "https://github.com/maydayrag/enhance-audio-manager",
