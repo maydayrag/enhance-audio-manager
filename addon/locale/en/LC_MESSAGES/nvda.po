@@ -8,47 +8,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:877
-msgid "All audio application volumes set to 100 and unmuted"
-msgstr "All audio application volumes set to 100 and unmuted"
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:916
+msgid ""
+"Audio application, playback and recording device volumes set to 100 and "
+"unmuted"
+msgstr ""
+"Audio application, playback and recording device volumes set to 100 and "
+"unmuted"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:541
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:565
 msgid "Audio applications"
 msgstr "Audio applications"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:611
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:638
 msgid "Audio operation failed; details have been written to the NVDA log"
 msgstr "Audio operation failed; details have been written to the NVDA log"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:882
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:921
 msgid "Decrease default microphone boost (dB)"
 msgstr "Decrease default microphone boost (dB)"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:695
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:722
 msgid "Decrease the selected audio target volume"
 msgstr "Decrease the selected audio target volume"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:452
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:476
 msgid "Default device, "
 msgstr "Default device, "
 
-#: buildVars.py:13 addon/globalPlugins/enhanceAudioManager/__init__.py:41
+#: buildVars.py:13 addon/globalPlugins/enhanceAudioManager/__init__.py:42
 msgid "Enhance Audio Manager"
 msgstr "Enhance Audio Manager"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:893
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:932
 msgid "Increase default microphone boost (dB)"
 msgstr "Increase default microphone boost (dB)"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:687
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:714
 msgid "Increase the selected audio target volume"
 msgstr "Increase the selected audio target volume"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:754
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:781
 msgid "Lock or unlock microphone volume"
 msgstr "Lock or unlock microphone volume"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:772
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:799
 #, python-brace-format
 msgid "Locked, {name}, volume {volume}"
 msgstr "Locked, {name}, volume {volume}"
@@ -61,205 +65,204 @@ msgstr ""
 "Manage Windows audio devices, application volume, and NVDA output devices "
 "from the keyboard."
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:916
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:955
 #, python-brace-format
 msgid "Microphone boost {level} dB"
 msgstr "Microphone boost {level} dB"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:515
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:924
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:972
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:539
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:963
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1011
 msgid "Muted"
 msgstr "Muted"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:451
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:475
 msgid "Muted, "
 msgstr "Muted, "
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:991
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1030
 #, python-brace-format
 msgid "NVDA output device: {name}"
 msgstr "NVDA output device: {name}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:735
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:762
 msgid "Next NVDA output device"
 msgstr "Next NVDA output device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:671
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:698
 msgid "Next audio application"
 msgstr "Next audio application"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:639
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:666
 msgid "Next playback device"
 msgstr "Next playback device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:803
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:830
 msgid "Next playback device for the selected audio application"
 msgstr "Next playback device for the selected audio application"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:655
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:682
 msgid "Next recording device"
 msgstr "Next recording device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:831
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:858
 msgid "Next recording device for the selected audio application"
 msgstr "Next recording device for the selected audio application"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:981
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1020
 msgid "No NVDA output devices"
 msgstr "No NVDA output devices"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:542
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:876
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:566
 msgid "No audio applications"
 msgstr "No audio applications"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:537
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:767
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:792
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:910
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:921
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:561
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:794
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:819
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:949
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:960
 msgid "No input devices"
 msgstr "No input devices"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:532
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:792
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:921
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:556
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:819
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:960
 msgid "No output devices"
 msgstr "No output devices"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:871
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:898
 msgid "Playback and recording devices reset for all audio applications"
 msgstr "Playback and recording devices reset for all audio applications"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:531
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:555
 msgid "Playback devices"
 msgstr "Playback devices"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:743
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:770
 msgid "Previous NVDA output device"
 msgstr "Previous NVDA output device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:679
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:706
 msgid "Previous audio application"
 msgstr "Previous audio application"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:647
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:674
 msgid "Previous playback device"
 msgstr "Previous playback device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:817
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:844
 msgid "Previous playback device for the selected audio application"
 msgstr "Previous playback device for the selected audio application"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:663
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:690
 msgid "Previous recording device"
 msgstr "Previous recording device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:845
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:872
 msgid "Previous recording device for the selected audio application"
 msgstr "Previous recording device for the selected audio application"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:536
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:560
 msgid "Recording devices"
 msgstr "Recording devices"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:859
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:886
 msgid ""
-"Reset devices for all audio applications; press twice to reset volume and "
-"unmute"
+"Reset devices for all audio applications; press twice to reset application "
+"and device volumes and unmute"
 msgstr ""
-"Reset devices for all audio applications; press twice to reset volume and "
-"unmute"
+"Reset devices for all audio applications; press twice to reset application "
+"and device volumes and unmute"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:619
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:709
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:646
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:736
 msgid "Select a playback device, recording device, or audio application first"
 msgstr ""
 "Select a playback device, recording device, or audio application first"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:721
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:748
 msgid "Select a playback or recording device first"
 msgstr "Select a playback or recording device first"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:784
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:811
 msgid "Select an audio application first"
 msgstr "Select an audio application first"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:449
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:463
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:507
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:473
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:487
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:531
 msgid "Select an audio target first"
 msgstr "Select an audio target first"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:730
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:757
 #, python-brace-format
 msgid "Set as Windows default device, {name}"
 msgstr "Set as Windows default device, {name}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:715
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:742
 msgid "Set the selected device as the Windows default"
 msgstr "Set the selected device as the Windows default"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:912
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:951
 msgid "The default microphone has no recognizable boost (dB) control"
 msgstr "The default microphone has no recognizable boost (dB) control"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:969
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1008
 msgid "The foreground application has no controllable audio session"
 msgstr "The foreground application has no controllable audio session"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:444
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:468
 msgid "The selected audio device has been removed"
 msgstr "The selected audio device has been removed"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:484
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:508
 msgid "The selected audio target is no longer available"
 msgstr "The selected audio target is no longer available"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:930
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:969
 msgid "Toggle mute for the default microphone"
 msgstr "Toggle mute for the default microphone"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:944
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:983
 msgid "Toggle mute for the default playback device"
 msgstr "Toggle mute for the default playback device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:958
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:997
 msgid "Toggle mute for the foreground application"
 msgstr "Toggle mute for the foreground application"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:703
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:730
 msgid "Toggle mute for the selected audio target"
 msgstr "Toggle mute for the selected audio target"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:787
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:814
 msgid "Unable to identify the selected application process"
 msgstr "Unable to identify the selected application process"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:777
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:804
 #, python-brace-format
 msgid "Unlocked, {name}"
 msgstr "Unlocked, {name}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:515
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:924
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:972
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:539
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:963
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1011
 msgid "Unmuted"
 msgstr "Unmuted"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:789
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:816
 msgid "Use the NVDA output device shortcuts to change NVDA playback device"
 msgstr "Use the NVDA output device shortcuts to change NVDA playback device"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:453
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:477
 #, python-brace-format
 msgid "{defaultState}{state}{name}, volume {volume}"
 msgstr "{defaultState}{state}{name}, volume {volume}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:513
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:923
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:971
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:537
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:962
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1010
 #, python-brace-format
 msgid "{state}, {name}"
 msgstr "{state}, {name}"

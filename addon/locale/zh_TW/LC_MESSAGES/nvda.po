@@ -8,47 +8,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:877
-msgid "All audio application volumes set to 100 and unmuted"
-msgstr "已將所有音訊應用程式音量重設為 100 並取消靜音"
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:916
+msgid ""
+"Audio application, playback and recording device volumes set to 100 and "
+"unmuted"
+msgstr "音訊應用程式、播放與錄音裝置音量已設為 100 並取消靜音"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:541
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:565
 msgid "Audio applications"
 msgstr "音訊應用程式"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:611
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:638
 msgid "Audio operation failed; details have been written to the NVDA log"
 msgstr "音訊操作失敗，詳細資訊已寫入 NVDA 記錄"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:882
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:921
 msgid "Decrease default microphone boost (dB)"
 msgstr "降低預設麥克風增量（dB）"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:695
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:722
 msgid "Decrease the selected audio target volume"
 msgstr "降低目前音訊目標的音量"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:452
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:476
 msgid "Default device, "
 msgstr "預設裝置，"
 
-#: buildVars.py:13 addon/globalPlugins/enhanceAudioManager/__init__.py:41
+#: buildVars.py:13 addon/globalPlugins/enhanceAudioManager/__init__.py:42
 msgid "Enhance Audio Manager"
 msgstr "Enhance Audio Manager 音訊管理器"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:893
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:932
 msgid "Increase default microphone boost (dB)"
 msgstr "提高預設麥克風增量（dB）"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:687
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:714
 msgid "Increase the selected audio target volume"
 msgstr "提高目前音訊目標的音量"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:754
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:781
 msgid "Lock or unlock microphone volume"
 msgstr "鎖定或解除鎖定麥克風音量"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:772
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:799
 #, python-brace-format
 msgid "Locked, {name}, volume {volume}"
 msgstr "已鎖定，{name}，音量 {volume}"
@@ -59,202 +61,201 @@ msgid ""
 "from the keyboard."
 msgstr "以鍵盤管理 Windows 音訊裝置、應用程式音量及 NVDA 輸出裝置。"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:916
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:955
 #, python-brace-format
 msgid "Microphone boost {level} dB"
 msgstr "麥克風增量 {level} dB"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:515
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:924
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:972
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:539
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:963
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1011
 msgid "Muted"
 msgstr "靜音"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:451
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:475
 msgid "Muted, "
 msgstr "靜音，"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:991
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1030
 #, python-brace-format
 msgid "NVDA output device: {name}"
 msgstr "NVDA 輸出裝置：{name}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:735
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:762
 msgid "Next NVDA output device"
 msgstr "下一個 NVDA 輸出裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:671
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:698
 msgid "Next audio application"
 msgstr "下一個音訊應用程式"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:639
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:666
 msgid "Next playback device"
 msgstr "下一個播放裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:803
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:830
 msgid "Next playback device for the selected audio application"
 msgstr "下一個音訊應用程式播放裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:655
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:682
 msgid "Next recording device"
 msgstr "下一個錄音裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:831
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:858
 msgid "Next recording device for the selected audio application"
 msgstr "下一個音訊應用程式錄音裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:981
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1020
 msgid "No NVDA output devices"
 msgstr "沒有任何 NVDA 輸出裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:542
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:876
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:566
 msgid "No audio applications"
 msgstr "沒有任何音訊應用程式"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:537
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:767
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:792
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:910
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:921
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:561
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:794
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:819
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:949
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:960
 msgid "No input devices"
 msgstr "沒有任何輸入裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:532
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:792
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:921
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:556
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:819
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:960
 msgid "No output devices"
 msgstr "沒有任何輸出裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:871
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:898
 msgid "Playback and recording devices reset for all audio applications"
 msgstr "已重設所有音訊應用程式的播放與錄音裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:531
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:555
 msgid "Playback devices"
 msgstr "播放裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:743
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:770
 msgid "Previous NVDA output device"
 msgstr "上一個 NVDA 輸出裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:679
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:706
 msgid "Previous audio application"
 msgstr "上一個音訊應用程式"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:647
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:674
 msgid "Previous playback device"
 msgstr "上一個播放裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:817
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:844
 msgid "Previous playback device for the selected audio application"
 msgstr "上一個音訊應用程式播放裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:663
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:690
 msgid "Previous recording device"
 msgstr "上一個錄音裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:845
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:872
 msgid "Previous recording device for the selected audio application"
 msgstr "上一個音訊應用程式錄音裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:536
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:560
 msgid "Recording devices"
 msgstr "錄音裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:859
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:886
 msgid ""
-"Reset devices for all audio applications; press twice to reset volume and "
-"unmute"
-msgstr "重設所有音訊應用程式的裝置；連按兩次重設音量並取消靜音"
+"Reset devices for all audio applications; press twice to reset application "
+"and device volumes and unmute"
+msgstr "重設所有音訊應用程式的裝置；連按兩次重設應用程式及裝置音量並取消靜音"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:619
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:709
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:646
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:736
 msgid "Select a playback device, recording device, or audio application first"
 msgstr "請先選擇播放裝置、錄音裝置或音訊應用程式"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:721
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:748
 msgid "Select a playback or recording device first"
 msgstr "請先選擇播放裝置或錄音裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:784
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:811
 msgid "Select an audio application first"
 msgstr "請先選擇音訊應用程式"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:449
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:463
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:507
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:473
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:487
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:531
 msgid "Select an audio target first"
 msgstr "請先選擇音訊目標"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:730
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:757
 #, python-brace-format
 msgid "Set as Windows default device, {name}"
 msgstr "已設為 Windows 預設裝置，{name}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:715
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:742
 msgid "Set the selected device as the Windows default"
 msgstr "將目前裝置設為 Windows 預設裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:912
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:951
 msgid "The default microphone has no recognizable boost (dB) control"
 msgstr "預設麥克風未提供可辨識的增量（dB）控制"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:969
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1008
 msgid "The foreground application has no controllable audio session"
 msgstr "目前視窗沒有可控制的音訊工作階段"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:444
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:468
 msgid "The selected audio device has been removed"
 msgstr "所選音訊裝置已移除"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:484
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:508
 msgid "The selected audio target is no longer available"
 msgstr "所選音訊目標已無法使用"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:930
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:969
 msgid "Toggle mute for the default microphone"
 msgstr "切換預設麥克風靜音"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:944
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:983
 msgid "Toggle mute for the default playback device"
 msgstr "切換預設系統聲音靜音"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:958
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:997
 msgid "Toggle mute for the foreground application"
 msgstr "切換目前視窗應用程式靜音"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:703
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:730
 msgid "Toggle mute for the selected audio target"
 msgstr "切換目前音訊目標的靜音狀態"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:787
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:814
 msgid "Unable to identify the selected application process"
 msgstr "無法取得所選應用程式的處理程序"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:777
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:804
 #, python-brace-format
 msgid "Unlocked, {name}"
 msgstr "已解除鎖定，{name}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:515
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:924
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:972
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:539
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:963
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1011
 msgid "Unmuted"
 msgstr "取消靜音"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:789
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:816
 msgid "Use the NVDA output device shortcuts to change NVDA playback device"
 msgstr "請使用 NVDA 輸出裝置快捷鍵切換 NVDA 的播放裝置"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:453
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:477
 #, python-brace-format
 msgid "{defaultState}{state}{name}, volume {volume}"
 msgstr "{defaultState}{state}{name}，音量 {volume}"
 
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:513
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:923
-#: addon/globalPlugins/enhanceAudioManager/__init__.py:971
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:537
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:962
+#: addon/globalPlugins/enhanceAudioManager/__init__.py:1010
 #, python-brace-format
 msgid "{state}, {name}"
 msgstr "{state}，{name}"

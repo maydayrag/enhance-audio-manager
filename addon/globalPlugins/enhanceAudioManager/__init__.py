@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 from concurrent.futures import Future, ThreadPoolExecutor
+from threading import Lock
 
 # 第三方相依套件跟隨附加元件封裝，避免依賴 NVDA 內部剛好附帶的套件。
 _vendorPath = str(Path(__file__).with_name("vendor"))
@@ -346,6 +347,29 @@ class CoreAudioBackend:
 			raise RuntimeError("One or more audio sessions could not be reset")
 		return resetCount
 
+	def resetAllDeviceVolumes(self) -> int:
+		"""將所有啟用中的播放與錄音裝置設為最大音量並取消靜音。"""
+		devices = AudioUtilities.GetAllDevices(
+			data_flow=EDataFlow.eAll.value, device_state=DEVICE_STATE.ACTIVE.value,
+		)
+		resetCount = 0
+		failed = False
+		for device in devices:
+			try:
+				volume = device.EndpointVolume
+				volume.SetMasterVolumeLevelScalar(1.0, None)
+				volume.SetMute(False, None)
+				if abs(volume.GetMasterVolumeLevelScalar() - 1.0) > 0.0001 or volume.GetMute():
+					raise RuntimeError("Device reset did not retain the requested volume and mute state")
+				resetCount += 1
+			except Exception:
+				# 一個裝置中斷時，仍繼續處理其他裝置。
+				failed = True
+				log.exception("Unable to reset an audio device")
+		if failed:
+			raise RuntimeError("One or more audio devices could not be reset")
+		return resetCount
+
 	def toggleDefaultMute(self, kind: DeviceKind) -> tuple[bool, AudioTarget] | None:
 		target = self.getDefaultDevice(kind)
 		if target is None:
@@ -545,6 +569,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self._sessionDeviceIndexes: dict[tuple[int, DeviceKind], int] = {}
 		self._microphoneVolumeLocked = config.conf["enhanceAudioManager"]["lockMicrophoneVolume"]
 		self._lockedMicrophoneVolume = config.conf["enhanceAudioManager"]["microphoneVolume"]
+		self._microphoneStateLock = Lock()
 		self._lastLockErrorTime = 0.0
 		self._microphoneExecutor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="EnhanceAudioManagerMic")
 		self._microphoneFuture: Future | None = None
@@ -591,8 +616,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			comtypes.CoInitialize()
 			try:
 				target = self._backend.getDefaultDevice(DeviceKind.RECORDING)
-				if target is not None and target.volume != self._lockedMicrophoneVolume:
-					target.setVolume(self._lockedMicrophoneVolume)
+				# 與重設共用鎖，避免背景檢查在重設後寫回舊音量。
+				with self._microphoneStateLock:
+					if target is not None and target.volume != self._lockedMicrophoneVolume:
+						target.setVolume(self._lockedMicrophoneVolume)
 			finally:
 				comtypes.CoUninitialize()
 		except Exception:
@@ -856,7 +883,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("Reset devices for all audio applications; press twice to reset volume and unmute"),
+		description=_("Reset devices for all audio applications; press twice to reset application and device volumes and unmute"),
 		gestures=[
 			"kb:control+windows+alt+numpadminus",
 			"kb(laptop):control+windows+alt+backspace",
@@ -872,9 +899,21 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			self._run(resetDevices, "Unable to reset application audio devices")
 		else:
 			def resetVolumes() -> str:
-				if self._backend.resetAllSessionVolumes() == 0:
-					return _("No audio applications")
-				return _("All audio application volumes set to 100 and unmuted")
+				with self._microphoneStateLock:
+					if self._microphoneVolumeLocked:
+						self._lockedMicrophoneVolume = 100
+						config.conf["enhanceAudioManager"]["microphoneVolume"] = 100
+				# 即使應用程式重設失敗，仍嘗試重設實體裝置，反之亦然。
+				failed = False
+				for reset in (self._backend.resetAllSessionVolumes, self._backend.resetAllDeviceVolumes):
+					try:
+						reset()
+					except Exception:
+						failed = True
+						log.exception("Unable to complete part of the audio volume reset")
+				if failed:
+					raise RuntimeError("Audio volume reset was incomplete")
+				return _("Audio application, playback and recording device volumes set to 100 and unmuted")
 			self._run(resetVolumes, "Unable to reset application audio volumes")
 
 	@scriptHandler.script(

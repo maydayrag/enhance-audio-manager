@@ -50,7 +50,7 @@ In the table below, **Base** means **Ctrl+Windows+Alt**. Numpad keys refer to th
 | Toggle default playback device mute | Shift+Base+Numpad 5 | Shift+Base+Up Arrow |
 | Toggle foreground application's mute | Shift+Base+Numpad 8 | Shift+Base+Space |
 
-Press the reset shortcut once to clear saved playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set the current application sessions on all active playback devices to 100% and unmute them. This does not change speaker volume or microphone boost.
+Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set application sessions and all active playback and recording devices (including speakers, headphones, and microphones) to 100% and unmute them. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.
 
 Turn off NVDA's Input Help with **NVDA+1** before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.
 
