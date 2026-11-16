@@ -259,3 +259,7 @@ msgstr "{defaultState}{state}{name}，音量 {volume}"
 #, python-brace-format
 msgid "{state}, {name}"
 msgstr "{state}，{name}"
+
+#, python-brace-format
+msgid "Locked, {description}"
+msgstr "已鎖定，{description}"

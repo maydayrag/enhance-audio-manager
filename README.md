@@ -26,6 +26,8 @@ An empty list is a normal condition and is not written to the NVDA log. Dependin
 
 When muting, unmuting, or setting a default device, the add-on announces the status first, followed by the device or application name.
 
+When browsing recording devices, the default microphone is announced as "Locked" if its volume lock is enabled. This status is also displayed in braille.
+
 When NVDA starts, the add-on checks all active playback devices, unmutes them, and sets any playback device with zero volume to 50%. Nonzero playback volume is preserved.
 
 ## Default keyboard shortcuts
@@ -86,3 +88,17 @@ When NVDA starts, the add-on checks all active playback devices, unmutes them, a
 Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set all active playback devices (including speakers and headphones) to 50%, set application sessions and active recording devices to 100%, and unmute them all. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.
 
 Turn off NVDA's Input Help with **NVDA+1** before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.
+
+## Changelog
+
+### 1.1
+
+- Reduced device lookup overhead by reading only the required name property. Microphone volume-lock checks no longer read device properties, and the timer stops when the lock is disabled.
+- Added spoken and braille "Locked" feedback when browsing the default microphone with volume lock enabled.
+- Reset now clears saved application device preferences even when no audio sessions are listed. Double-press reset sets active playback devices to 50%, application sessions and recording devices to 100%, and unmutes them. An enabled microphone volume lock is updated to 100%.
+- At NVDA startup, active playback devices are unmuted and zero playback volume is restored to 50%.
+- Updated English and Traditional Chinese documentation and translations. Compatibility metadata lists NVDA 2026.2 as the last tested version.
+
+### 1.0
+
+- Initial release.

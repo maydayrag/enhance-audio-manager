@@ -266,3 +266,7 @@ msgstr "{defaultState}{state}{name}, volume {volume}"
 #, python-brace-format
 msgid "{state}, {name}"
 msgstr "{state}, {name}"
+
+#, python-brace-format
+msgid "Locked, {description}"
+msgstr "Locked, {description}"

@@ -15,6 +15,7 @@
 <p>After an audio device is connected or disconnected, the add-on refreshes the list of active Windows devices the next time you browse devices or toggle mute. Repeated volume adjustments reuse the current interface; the add-on refreshes it and retries only if that interface becomes invalid.</p>
 <p>An empty list is a normal condition and is not written to the NVDA log. Depending on the operation, the add-on announces that there are no playback devices, recording devices, audio applications, or NVDA output devices.</p>
 <p>When muting, unmuting, or setting a default device, the add-on announces the status first, followed by the device or application name.</p>
+<p>When browsing recording devices, the default microphone is announced as "Locked" if its volume lock is enabled. This status is also displayed in braille.</p>
 <p>When NVDA starts, the add-on checks all active playback devices, unmutes them, and sets any playback device with zero volume to 50%. Nonzero playback volume is preserved.</p>
 <h2>Default keyboard shortcuts</h2>
 <h3>Desktop layout</h3>
@@ -71,5 +72,16 @@
 </ul>
 <p>Press the reset shortcut once to clear saved application playback and recording device preferences, even when no audio applications are currently listed. Press it twice quickly to also set all active playback devices (including speakers and headphones) to 50%, set application sessions and active recording devices to 100%, and unmute them all. If microphone volume lock is enabled, its locked volume becomes 100%. Microphone boost and Windows default device selections remain unchanged.</p>
 <p>Turn off NVDA's Input Help with <strong>NVDA+1</strong> before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.</p>
+<h2>Changelog</h2>
+<h3>1.1</h3>
+<ul>
+<li>Reduced device lookup overhead by reading only the required name property. Microphone volume-lock checks no longer read device properties, and the timer stops when the lock is disabled.</li>
+<li>Added spoken and braille "Locked" feedback when browsing the default microphone with volume lock enabled.</li>
+<li>Reset now clears saved application device preferences even when no audio sessions are listed. Double-press reset sets active playback devices to 50%, application sessions and recording devices to 100%, and unmutes them. An enabled microphone volume lock is updated to 100%.</li>
+<li>At NVDA startup, active playback devices are unmuted and zero playback volume is restored to 50%.</li>
+<li>Updated English and Traditional Chinese documentation and translations. Compatibility metadata lists NVDA 2026.2 as the last tested version.</li>
+</ul>
+<h3>1.0</h3>
+<ul><li>Initial release.</li></ul>
 </body>
 </html>

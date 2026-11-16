@@ -33,9 +33,12 @@ import ui
 from utils import mmdevice
 import wx
 from comtypes import COMError
+from comtypes import GUID as ComGUID, CLSCTX_ALL
 from pycaw.api.audioclient import ISimpleAudioVolume
-from pycaw.constants import DEVICE_STATE, EDataFlow, ERole
-from pycaw.utils import AudioUtilities
+from pycaw.api.endpointvolume import IAudioEndpointVolume
+from pycaw.api.mmdeviceapi.depend.structures import PROPERTYKEY
+from pycaw.constants import DEVICE_STATE, EDataFlow, ERole, STGM
+from pycaw.utils import AudioUtilities, AudioDevice
 
 addonHandler.initTranslation()
 
@@ -213,12 +216,24 @@ class CoreAudioBackend:
 	def close(self) -> None:
 		self._policy.close()
 
+	def _namedDevice(self, endpoint):
+		"""只讀取顯示名稱，不逐一讀取裝置的全部屬性。"""
+		identifier = endpoint.GetId()
+		key = PROPERTYKEY(ComGUID("{a45c254e-df1c-4efd-8020-67d146a850e0}"), 14)
+		store = endpoint.OpenPropertyStore(STGM.STGM_READ.value)
+		name = identifier
+		if store is not None:
+			value = store.GetValue(key)
+			try:
+				name = value.GetValue() or identifier
+			finally:
+				value.clear()
+		return AudioDevice(identifier, None, {str(key): name}, endpoint)
+
 	def listDevices(self, kind: DeviceKind) -> list[AudioTarget]:
 		enumerator = AudioUtilities.GetDeviceEnumerator()
-		devices = AudioUtilities.GetAllDevices(
-			data_flow=kind.value,
-			device_state=DEVICE_STATE.ACTIVE.value,
-		)
+		collection = enumerator.EnumAudioEndpoints(kind.value, DEVICE_STATE.ACTIVE.value)
+		devices = [self._namedDevice(collection.Item(index)) for index in range(collection.GetCount())]
 		# 沒有端點是拔除 USB 裝置後的正常狀態。先回傳空清單，避免
 		# GetDefaultAudioEndpoint 以「找不到項目」HRESULT 造成錯誤記錄。
 		if not devices:
@@ -263,7 +278,7 @@ class CoreAudioBackend:
 			)
 		return results
 
-	def getDefaultDevice(self, kind: DeviceKind) -> AudioTarget | None:
+	def getDefaultDevice(self, kind: DeviceKind, *, includeName: bool = True) -> AudioTarget | None:
 		"""取得 Windows 多媒體角色目前使用的預設裝置。"""
 		enumerator = AudioUtilities.GetDeviceEnumerator()
 		try:
@@ -278,7 +293,11 @@ class CoreAudioBackend:
 			return None
 		# Avoid enumerating every endpoint here. Opening the property store for a
 		# changing USB or Bluetooth device can block for several seconds.
-		device = AudioUtilities.CreateDevice(defaultEndpoint)
+		if not includeName:
+			# 背景鎖定只需要音量介面；每次仍取得目前預設端點，避免操作舊麥克風。
+			volume = defaultEndpoint.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None).QueryInterface(IAudioEndpointVolume)
+			return AudioTarget("", "", volume, isEndpoint=True, isDefault=True)
+		device = self._namedDevice(defaultEndpoint)
 		if device is None:
 			return None
 		return AudioTarget(
@@ -582,7 +601,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# 與參考專案相同，每 100 毫秒檢查一次預設麥克風音量。
 		self._microphoneTimer = wx.Timer()
 		self._microphoneTimer.Bind(wx.EVT_TIMER, self._onMicrophoneTimer)
-		self._microphoneTimer.Start(100)
+		if self._microphoneVolumeLocked:
+			self._microphoneTimer.Start(100)
 		# 等 NVDA 啟動流程回到 GUI 事件迴圈後，再執行一次播放裝置取消靜音。
 		wx.CallAfter(self._unmutePlaybackDevicesOnStartup)
 
@@ -607,6 +627,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		"""NVDA 卸載外掛時停止計時器，避免留下仍在執行的回呼。"""
 		self._microphoneTimer.Stop()
 		self._microphoneTimer.Unbind(wx.EVT_TIMER, handler=self._onMicrophoneTimer)
+		with self._microphoneStateLock:
+			self._microphoneVolumeLocked = False
 		self._microphoneExecutor.shutdown(wait=False, cancel_futures=True)
 		self._backend.close()
 		super().terminate()
@@ -627,10 +649,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 			comtypes.CoInitialize()
 			try:
-				target = self._backend.getDefaultDevice(DeviceKind.RECORDING)
+				target = self._backend.getDefaultDevice(DeviceKind.RECORDING, includeName=False)
 				# 與重設共用鎖，避免背景檢查在重設後寫回舊音量。
 				with self._microphoneStateLock:
-					if target is not None and target.volume != self._lockedMicrophoneVolume:
+					if self._microphoneVolumeLocked and target is not None and target.volume != self._lockedMicrophoneVolume:
 						target.setVolume(self._lockedMicrophoneVolume)
 			finally:
 				comtypes.CoUninitialize()
@@ -651,7 +673,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def _select(self, navigator: TargetNavigator, offset: int) -> None:
 		self._activeNavigator = navigator
-		self._run(lambda: navigator.move(offset), "Unable to enumerate audio targets")
+		def select() -> str:
+			description = navigator.move(offset)
+			target = navigator.current
+			# 瀏覽時已取得最新預設狀態，直接沿用，避免為鎖定提示再次查詢裝置。
+			if navigator is self._recording and self._microphoneVolumeLocked and target is not None and target.isDefault:
+				return _("Locked, {description}").format(description=description)
+			return description
+		self._run(select, "Unable to enumerate audio targets")
 
 	def _volume(self, direction: int) -> str:
 		if self._activeNavigator is None:
@@ -804,9 +833,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		target = self._backend.getDefaultDevice(DeviceKind.RECORDING)
 		if target is None:
 			return _("No input devices")
-		self._microphoneVolumeLocked = not self._microphoneVolumeLocked
+		volume = target.volume if not self._microphoneVolumeLocked else None
+		with self._microphoneStateLock:
+			self._microphoneVolumeLocked = not self._microphoneVolumeLocked
+			if self._microphoneVolumeLocked:
+				self._lockedMicrophoneVolume = volume
 		if self._microphoneVolumeLocked:
-			self._lockedMicrophoneVolume = target.volume
 			config.conf["enhanceAudioManager"]["microphoneVolume"] = self._lockedMicrophoneVolume
 			message = _("Locked, {name}, volume {volume}").format(
 				name=target.name,
@@ -815,6 +847,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		else:
 			message = _("Unlocked, {name}").format(name=target.name)
 		config.conf["enhanceAudioManager"]["lockMicrophoneVolume"] = self._microphoneVolumeLocked
+		if self._microphoneVolumeLocked:
+			self._microphoneTimer.Start(100)
+		else:
+			self._microphoneTimer.Stop()
 		return message
 
 	def _changeSessionDevice(self, kind: DeviceKind, offset: int) -> str:
