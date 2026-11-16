@@ -93,12 +93,5 @@ Turn off NVDA's Input Help with **NVDA+1** before using these commands. While In
 
 ### 1.1
 
-- Reduced device lookup overhead by reading only the required name property. Microphone volume-lock checks no longer read device properties, and the timer stops when the lock is disabled.
-- Added spoken and braille "Locked" feedback when browsing the default microphone with volume lock enabled.
-- Reset now clears saved application device preferences even when no audio sessions are listed. Double-press reset sets active playback devices to 50%, application sessions and recording devices to 100%, and unmutes them. An enabled microphone volume lock is updated to 100%.
-- At NVDA startup, active playback devices are unmuted and zero playback volume is restored to 50%.
-- Updated English and Traditional Chinese documentation and translations. Compatibility metadata lists NVDA 2026.2 as the last tested version.
-
-### 1.0
-
-- Initial release.
+- Correctly announces the locked status when browsing a locked device.
+- Improved performance.
