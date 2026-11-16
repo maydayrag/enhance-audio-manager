@@ -10,15 +10,15 @@ from build_translations import validated_catalogs
 
 ROOT = Path(__file__).parent
 SOURCE = ROOT / "addon"
-PACKAGE = ROOT / "dist/enhanceAudioManager-1.2.nvda-addon"
+PACKAGE = ROOT / "dist/enhanceAudioManager-1.3.nvda-addon"
 
 
 def verify_package(path):
     assert path.read_bytes()[:4] == b"PK\x03\x04"
     with zipfile.ZipFile(path) as archive:
         assert archive.testzip() is None
-        assert b'version = "1.2"' in archive.read("manifest.ini")
-        assert b'lastTestedNVDAVersion = "2026.2"' in archive.read("manifest.ini")
+        assert b'version = "1.3"' in archive.read("manifest.ini")
+        assert b'lastTestedNVDAVersion = "2026.3"' in archive.read("manifest.ini")
         assert b'name = "enhanceAudioManager"' in archive.read("manifest.ini")
         assert b'summary = "Enhance Audio Manager"' in archive.read("manifest.ini")
         assert "globalPlugins/enhanceAudioManager/__init__.py" in archive.namelist()
