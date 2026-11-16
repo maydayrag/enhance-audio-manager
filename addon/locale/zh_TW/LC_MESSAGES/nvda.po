@@ -36,7 +36,7 @@ msgstr "預設裝置，"
 
 #: buildVars.py:13 addon/globalPlugins/enhanceAudioManager/__init__.py:42
 msgid "Enhance Audio Manager"
-msgstr "Enhance Audio Manager 音訊管理器"
+msgstr "進階音訊管理器"
 
 #: addon/globalPlugins/enhanceAudioManager/__init__.py:932
 msgid "Increase default microphone boost (dB)"
