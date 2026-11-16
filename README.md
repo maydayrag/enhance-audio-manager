@@ -4,7 +4,7 @@ Author: roundface
 
 ## Introduction
 
-Version: 1.1. Control Windows playback and recording devices, application volume, microphone boost, and NVDA's output device from the keyboard, with speech and braille feedback.
+Version: 1.2. Control Windows playback and recording devices, application volume, microphone boost, and NVDA's output device from the keyboard, with speech and braille feedback.
 
 Supports NVDA 2026.2. Minimum required version: NVDA 2026.1.1.
 
@@ -12,9 +12,9 @@ English and Traditional Chinese interface translations and user guides are inclu
 
 ## Installation and operation
 
-Download the installation package from [version 1.1](https://github.com/maydayrag/enhance-audio-manager/releases/tag/v1.1). User guides are included in [English](addon/doc/en/readme.html) and [Traditional Chinese](addon/doc/zh_TW/readme.html).
+Download the installation package from [version 1.2](https://github.com/maydayrag/enhance-audio-manager/releases/tag/v1.2). User guides are included in [English](addon/doc/en/readme.html) and [Traditional Chinese](addon/doc/zh_TW/readme.html).
 
-Open `enhanceAudioManager-1.1.nvda-addon` with NVDA running, follow the installation prompts, and restart NVDA. Use the shortcuts below to select a playback device, recording device, or audio application, then adjust its volume, mute state, or device. Laptop shortcuts apply to NVDA's laptop keyboard layout.
+Open `enhanceAudioManager-1.2.nvda-addon` with NVDA running, follow the installation prompts, and restart NVDA. Use the shortcuts below to select a playback device, recording device, or audio application, then adjust its volume, mute state, or device. Laptop shortcuts apply to NVDA's laptop keyboard layout.
 
 To reassign any command, open NVDA's **Input gestures** dialog and search for **Enhance Audio Manager**.
 
@@ -91,7 +91,7 @@ Turn off NVDA's Input Help with **NVDA+1** before using these commands. While In
 
 ## Changelog
 
-### 1.1
+### 1.2
 
 - Correctly announces the locked status when browsing a locked device.
 - Improved performance.

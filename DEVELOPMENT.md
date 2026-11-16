@@ -8,7 +8,7 @@ With Python available on PATH, run:
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-The output is `dist/enhanceAudioManager-1.1.nvda-addon`. The build bundles `comtypes 1.4.13`, `pycaw 20251023`, and `psutil 7.2.1`. It uses `polib 1.2.0` to compile the translation catalogs before packaging.
+The output is `dist/enhanceAudioManager-1.2.nvda-addon`. The build bundles `comtypes 1.4.13`, `pycaw 20251023`, and `psutil 7.2.1`. It uses `polib 1.2.0` to compile the translation catalogs before packaging.
 
 Edit `addon/locale/en/LC_MESSAGES/nvda.po` and `addon/locale/zh_TW/LC_MESSAGES/nvda.po` to maintain translations. English is the source language. The build checks coverage and formatting placeholders and regenerates `nvda.mo`. Localized manifest files provide the translated name and description. User guides are in `addon/doc/en` and `addon/doc/zh_TW`.
 
