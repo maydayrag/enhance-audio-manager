@@ -10,14 +10,14 @@ from build_translations import validated_catalogs
 
 ROOT = Path(__file__).parent
 SOURCE = ROOT / "addon"
-PACKAGE = ROOT / "dist/enhanceAudioManager-1.3.nvda-addon"
+PACKAGE = ROOT / "dist/enhanceAudioManager-1.4.nvda-addon"
 
 
 def verify_package(path):
     assert path.read_bytes()[:4] == b"PK\x03\x04"
     with zipfile.ZipFile(path) as archive:
         assert archive.testzip() is None
-        assert b'version = "1.3"' in archive.read("manifest.ini")
+        assert b'version = "1.4"' in archive.read("manifest.ini")
         assert b'lastTestedNVDAVersion = "2026.3"' in archive.read("manifest.ini")
         assert b'name = "enhanceAudioManager"' in archive.read("manifest.ini")
         assert b'summary = "Enhance Audio Manager"' in archive.read("manifest.ini")
@@ -65,6 +65,9 @@ def verify_behavior():
     assert bindings["kb(laptop):control+windows+uparrow"] == "script_defaultMicrophoneBoostUp"
     assert bindings["kb:control+windows+alt+numpadminus"] == "script_resetSessions"
     assert bindings["kb(laptop):control+windows+alt+backspace"] == "script_resetSessions"
+    assert bindings["kb:control+windows+alt+shift+numpaddelete"] == "script_toggleMicrophoneVolumeLock"
+    assert "kb:control+windows+alt+numpaddelete" not in bindings
+    assert bindings["kb(laptop):control+windows+alt+delete"] == "script_toggleMicrophoneVolumeLock"
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ Author: roundface
 
 ## Introduction
 
-Version: 1.3. Control Windows playback and recording devices, application volume, microphone boost, and NVDA's output device from the keyboard, with speech and braille feedback.
+Version: 1.4. Control Windows playback and recording devices, application volume, microphone boost, and NVDA's output device from the keyboard, with speech and braille feedback.
 
 Supports NVDA 2026.3. Minimum required version: NVDA 2026.1.1.
 
@@ -12,9 +12,9 @@ English and Traditional Chinese interface translations and user guides are inclu
 
 ## Installation and operation
 
-Download the installation package from [version 1.3](https://github.com/maydayrag/enhance-audio-manager/releases/tag/v1.3). User guides are included in [English](addon/doc/en/readme.html) and [Traditional Chinese](addon/doc/zh_TW/readme.html).
+Download the installation package from [version 1.4](https://github.com/maydayrag/enhance-audio-manager/releases/tag/v1.4). User guides are included in [English](addon/doc/en/readme.html) and [Traditional Chinese](addon/doc/zh_TW/readme.html).
 
-Open `enhanceAudioManager-1.3.nvda-addon` with NVDA running, follow the installation prompts, and restart NVDA. Use the shortcuts below to select a playback device, recording device, or audio application, then adjust its volume, mute state, or device. Laptop shortcuts apply to NVDA's laptop keyboard layout.
+Open `enhanceAudioManager-1.4.nvda-addon` with NVDA running, follow the installation prompts, and restart NVDA. Use the shortcuts below to select a playback device, recording device, or audio application, then adjust its volume, mute state, or device. Laptop shortcuts apply to NVDA's laptop keyboard layout.
 
 To reassign any command, open NVDA's **Input gestures** dialog and search for **Enhance Audio Manager**.
 
@@ -48,7 +48,7 @@ When NVDA starts, the add-on checks all active playback devices, unmutes them, a
 - Set selected device as Windows default: Control+Windows+Alt+Numpad Enter.
 - Next NVDA output device: Control+Windows+Alt+Numpad Plus.
 - Previous NVDA output device: Shift+Control+Windows+Alt+Numpad Plus.
-- Lock or unlock default microphone volume: Control+Windows+Alt+Numpad Delete.
+- Lock or unlock default microphone volume: Control+Windows+Alt+Shift+Numpad Delete.
 - Next playback device for selected application: Control+Windows+Alt+Numpad Multiply.
 - Previous playback device for selected application: Shift+Control+Windows+Alt+Numpad Multiply.
 - Next recording device for selected application: Control+Windows+Alt+Numpad Divide.
@@ -90,6 +90,10 @@ Press the reset shortcut once to clear saved application playback and recording 
 Turn off NVDA's Input Help with **NVDA+1** before using these commands. While Input Help is on, NVDA describes the shortcut without executing it.
 
 ## Changelog
+
+### 1.4
+
+- Changed the desktop shortcut for locking or unlocking the default microphone volume to Control+Windows+Alt+Shift+Numpad Delete and clarified its command description.
 
 ### 1.3
 

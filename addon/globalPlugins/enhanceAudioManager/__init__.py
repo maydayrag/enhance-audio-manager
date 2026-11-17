@@ -819,9 +819,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		category=CATEGORY,
-		description=_("Lock or unlock microphone volume"),
+		description=_("Lock or unlock default microphone volume"),
 		gestures=[
-			"kb:control+windows+alt+numpaddelete",
+			"kb:control+windows+alt+shift+numpaddelete",
 			"kb(laptop):control+windows+alt+delete",
 		],
 	)
