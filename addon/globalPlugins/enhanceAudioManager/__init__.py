@@ -822,7 +822,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		description=_("Lock or unlock default microphone volume"),
 		gestures=[
 			"kb:control+windows+alt+shift+numpaddelete",
-			"kb(laptop):control+windows+alt+delete",
+			"kb(laptop):control+windows+alt+shift+delete",
 		],
 	)
 	def script_toggleMicrophoneVolumeLock(self, gesture):

@@ -67,7 +67,7 @@ def verify_behavior():
     assert bindings["kb(laptop):control+windows+alt+backspace"] == "script_resetSessions"
     assert bindings["kb:control+windows+alt+shift+numpaddelete"] == "script_toggleMicrophoneVolumeLock"
     assert "kb:control+windows+alt+numpaddelete" not in bindings
-    assert bindings["kb(laptop):control+windows+alt+delete"] == "script_toggleMicrophoneVolumeLock"
+    assert bindings["kb(laptop):control+windows+alt+shift+delete"] == "script_toggleMicrophoneVolumeLock"
 
 
 if __name__ == "__main__":

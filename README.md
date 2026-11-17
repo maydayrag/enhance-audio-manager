@@ -75,7 +75,7 @@ When NVDA starts, the add-on checks all active playback devices, unmutes them, a
 - Set selected device as Windows default: Control+Windows+Alt+Enter.
 - Next NVDA output device: Control+Windows+Alt+Backslash.
 - Previous NVDA output device: Shift+Control+Windows+Alt+Backslash.
-- Lock or unlock default microphone volume: Control+Windows+Alt+Delete.
+- Lock or unlock default microphone volume: Control+Windows+Alt+Shift+Delete.
 - Next playback device for selected application: Control+Windows+Alt+Right Bracket.
 - Previous playback device for selected application: Shift+Control+Windows+Alt+Right Bracket.
 - Next recording device for selected application: Control+Windows+Alt+Left Bracket.
@@ -93,7 +93,7 @@ Turn off NVDA's Input Help with **NVDA+1** before using these commands. While In
 
 ### 1.4
 
-- Changed the desktop shortcut for locking or unlocking the default microphone volume to Control+Windows+Alt+Shift+Numpad Delete and clarified its command description.
+- Changed the shortcut for locking or unlocking the default microphone volume: desktop uses Control+Windows+Alt+Shift+Numpad Delete; laptop uses Control+Windows+Alt+Shift+Delete.
 
 ### 1.3
 
